@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:fitsSystemWindows="true">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- 母音 -->
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="50dp">
+
+                    <Button
+                        android:id="@+id/btn_a"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="a" />
+                    <Button
+                        android:id="@+id/btn_e"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="e" />
+                    <Button
+                        android:id="@+id/btn_i"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="i" />
+                    <Button
+                        android:id="@+id/btn_o"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="o" />
+                    <Button
+                        android:id="@+id/btn_u"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="u" />
+
+                    <Button
+                        android:id="@+id/btn_left"
+                        android:layout_width="35dp"
+                        android:layout_height="45dp"
+                        android:text="←" />
+                    <Button
+                        android:id="@+id/btn_down"
+                        android:layout_width="40dp"
+                        android:layout_height="45dp"
+                        android:text="↓" />
+                    <Button
+                        android:id="@+id/btn_right"
+                        android:layout_width="35dp"
+                        android:layout_height="45dp"
+                        android:text="→" />
+                </GridLayout>
+
+                <!-- 子音 -->
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <Button
+                        android:id="@+id/btn_j"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="j" />
+                    <Button
+                        android:id="@+id/btn_k"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="k" />
+                    <Button
+                        android:id="@+id/btn_l"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="l" />
+                    <Button
+                        android:id="@+id/btn_m"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="m" />
+                    <Button
+                        android:id="@+id/btn_n"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="n" />
+
+                    <FrameLayout
+                        android:layout_width="35dp"/>
+
+                    <Button
+                        android:id="@+id/btn_up"
+                        android:layout_width="40dp"
+                        android:layout_height="45dp"
+                        android:text="↑" />
+                </GridLayout>
+
+                <GridLayout
+                    android:layout_width="400dp"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="100dp">
+
+                    <FrameLayout
+                        android:layout_width="20dp"/>
+
+                    <Button
+                        android:id="@+id/btn_p"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="p" />
+                    <Button
+                        android:id="@+id/btn_s"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="s" />
+                    <Button
+                        android:id="@+id/btn_t"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="t" />
+                    <Button
+                        android:id="@+id/btn_w"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="w" />
+
+                    <FrameLayout
+                        android:layout_width="20dp"/>
+
+                    <Button
+                        android:id="@+id/btn_back_space"
+                        android:layout_width="60dp"
+                        android:layout_height="50dp"
+                        android:text="BS" />
+                    <Button
+                        android:id="@+id/btn_enter"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="↩" />
+                </GridLayout>
+
+                <!-- その他 -->
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="160dp">
+                    <Button
+                        android:id="@+id/btn_comma"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:text="," />
+                    <Button
+                        android:id="@+id/btn_space"
+                        android:layout_width="140dp"
+                        android:layout_height="50dp"
+                        android:text="space" />
+                    <Button
+                        android:id="@+id/btn_period"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:text="." />
+                    <Button
+                        android:id="@+id/btn_coron"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:text=":" />
+                    <Button
+                        android:id="@+id/btn_exclamation"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:text="!" />
+                    <Button
+                        android:id="@+id/btn_question"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:text="\?" />
+                </GridLayout>
+            </FrameLayout>
+        </TableRow>
+    </TableLayout>
+</LinearLayout>
