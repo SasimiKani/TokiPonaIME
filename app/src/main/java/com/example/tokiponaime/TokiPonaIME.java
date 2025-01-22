@@ -1,19 +1,13 @@
 package com.example.tokiponaime;
 
-import static androidx.compose.foundation.text2.input.internal.EditCommandKt.moveCursor;
-
 import android.os.Handler;
-import android.text.Editable;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.ExtractedTextRequest;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.inputmethodservice.InputMethodService;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.view.inputmethod.InputConnection;
 
 import java.util.ArrayList;
@@ -21,44 +15,44 @@ import java.util.List;
 
 public class TokiPonaIME extends InputMethodService {
     private View candidatesView;
-    private View view;
+    private View inputView;
 
     @Override
     public View onCreateInputView() {
-        view = getLayoutInflater().inflate(R.layout.keyboard_layout, null);
+        inputView = getLayoutInflater().inflate(R.layout.keyboard_layout, null);
 
         // 母音
-        Button btnA = view.findViewById(R.id.btn_a);
-        Button btnE = view.findViewById(R.id.btn_e);
-        Button btnI = view.findViewById(R.id.btn_i);
-        Button btnO = view.findViewById(R.id.btn_o);
-        Button btnU = view.findViewById(R.id.btn_u);
+        Button btnA = inputView.findViewById(R.id.btn_a);
+        Button btnE = inputView.findViewById(R.id.btn_e);
+        Button btnI = inputView.findViewById(R.id.btn_i);
+        Button btnO = inputView.findViewById(R.id.btn_o);
+        Button btnU = inputView.findViewById(R.id.btn_u);
 
         // 子音
-        Button btnJ = view.findViewById(R.id.btn_j);
-        Button btnK = view.findViewById(R.id.btn_k);
-        Button btnL = view.findViewById(R.id.btn_l);
-        Button btnM = view.findViewById(R.id.btn_m);
-        Button btnN = view.findViewById(R.id.btn_n);
-        Button btnP = view.findViewById(R.id.btn_p);
-        Button btnS = view.findViewById(R.id.btn_s);
-        Button btnT = view.findViewById(R.id.btn_t);
-        Button btnW = view.findViewById(R.id.btn_w);
+        Button btnJ = inputView.findViewById(R.id.btn_j);
+        Button btnK = inputView.findViewById(R.id.btn_k);
+        Button btnL = inputView.findViewById(R.id.btn_l);
+        Button btnM = inputView.findViewById(R.id.btn_m);
+        Button btnN = inputView.findViewById(R.id.btn_n);
+        Button btnP = inputView.findViewById(R.id.btn_p);
+        Button btnS = inputView.findViewById(R.id.btn_s);
+        Button btnT = inputView.findViewById(R.id.btn_t);
+        Button btnW = inputView.findViewById(R.id.btn_w);
 
         // その他
-        Button btnEnter = view.findViewById(R.id.btn_enter);
-        Button btnSpace = view.findViewById(R.id.btn_space);
-        Button btnBackSpace = view.findViewById(R.id.btn_back_space);
-        Button btnPeriod = view.findViewById(R.id.btn_period);
-        Button btnComma = view.findViewById(R.id.btn_comma);
-        Button btnCoron = view.findViewById(R.id.btn_coron);
-        Button btnExclamation = view.findViewById(R.id.btn_exclamation);
-        Button btnQuestion = view.findViewById(R.id.btn_question);
+        Button btnEnter = inputView.findViewById(R.id.btn_enter);
+        Button btnSpace = inputView.findViewById(R.id.btn_space);
+        Button btnBackSpace = inputView.findViewById(R.id.btn_back_space);
+        Button btnPeriod = inputView.findViewById(R.id.btn_period);
+        Button btnComma = inputView.findViewById(R.id.btn_comma);
+        Button btnCoron = inputView.findViewById(R.id.btn_coron);
+        Button btnExclamation = inputView.findViewById(R.id.btn_exclamation);
+        Button btnQuestion = inputView.findViewById(R.id.btn_question);
 
-        Button btnUp = view.findViewById(R.id.btn_up);
-        Button btnDown = view.findViewById(R.id.btn_down);
-        Button btnLeft = view.findViewById(R.id.btn_left);
-        Button btnRight = view.findViewById(R.id.btn_right);
+        Button btnUp = inputView.findViewById(R.id.btn_up);
+        Button btnDown = inputView.findViewById(R.id.btn_down);
+        Button btnLeft = inputView.findViewById(R.id.btn_left);
+        Button btnRight = inputView.findViewById(R.id.btn_right);
 
         btnA.setOnClickListener(v -> {
             getCurrentInputConnection().commitText("a", 1);
@@ -174,7 +168,7 @@ public class TokiPonaIME extends InputMethodService {
         btnLeft.setOnClickListener(v -> moveCursor("left"));
         btnRight.setOnClickListener(v -> moveCursor("right"));
 
-        return view;
+        return inputView;
     }
 
     private void moveCursor(String direction) {
