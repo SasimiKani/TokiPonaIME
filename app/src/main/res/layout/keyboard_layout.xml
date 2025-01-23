@@ -139,9 +139,9 @@
 
                     <Button
                         android:id="@+id/btn_back_space"
-                        android:layout_width="60dp"
+                        android:layout_width="65dp"
                         android:layout_height="50dp"
-                        android:text="BS" />
+                        android:text="weka" />
                     <Button
                         android:id="@+id/btn_enter"
                         android:layout_width="60dp"
@@ -163,7 +163,7 @@
                         android:id="@+id/btn_space"
                         android:layout_width="140dp"
                         android:layout_height="50dp"
-                        android:text="space" />
+                        android:text="kon" />
                     <Button
                         android:id="@+id/btn_period"
                         android:layout_width="50dp"
