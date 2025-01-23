@@ -389,7 +389,7 @@ public class TokiPonaIME extends InputMethodService {
         LinearLayout candidateList = inputView.findViewById(R.id.candidate_list);
 
         // 仮の候補リスト
-        List<String> candidates = getSuggestions("");
+        List<String> candidates = getSuggestions("a");
 
         // 候補を追加
         for (String candidate : candidates) {
@@ -491,7 +491,7 @@ public class TokiPonaIME extends InputMethodService {
             button.setText(candidate);
             button.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
-                    dpToPx(50)
+                    LinearLayout.LayoutParams.WRAP_CONTENT
             ));
             button.setOnClickListener(v -> getCurrentInputConnection().commitText(candidate + " ", 1));
             candidateList.addView(button);
