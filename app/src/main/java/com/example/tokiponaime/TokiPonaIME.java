@@ -432,7 +432,7 @@ public class TokiPonaIME extends InputMethodService {
         if (!input.isEmpty() && input.charAt(input.length() - 1) != ' ') {
             if (Character.isAlphabetic(input.charAt(input.length() - 1))) {
                 // 新しい候補を取得
-                String[] inputParts = input.split(" ");
+                String[] inputParts = input.split("( |\n)");
                 String last_input = inputParts[inputParts.length - 1];
                 suggestions = getSuggestions(last_input);
             }
@@ -453,7 +453,7 @@ public class TokiPonaIME extends InputMethodService {
                     CharSequence currentText = inputConnection.getExtractedText(new ExtractedTextRequest(), 0).text;
                     if (currentText != null) {
                         // 入力中の文字列を削除
-                        final String[] parts = ((String)currentText).split(" ");
+                        final String[] parts = ((String)currentText).split("( |\n)");
                         String last = parts[parts.length - 1];
                         inputConnection.deleteSurroundingText(last.length(), 0);
                     }
