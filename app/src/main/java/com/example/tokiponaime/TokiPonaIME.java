@@ -135,7 +135,7 @@ public class TokiPonaIME extends InputMethodService {
                                     if (currentText.length() > 0 && currentText != null) {
                                         inputConnection.deleteSurroundingText(1, 0);
                                     }
-                                    handler.postDelayed(this, 100);  // 100msごとに繰り返し削除
+                                    handler.postDelayed(this, 60);  // 100msごとに繰り返し削除
                                     isLongPress = true;  // 長押しが始まった
                                 }
                             };
@@ -167,10 +167,102 @@ public class TokiPonaIME extends InputMethodService {
             getCurrentInputConnection().commitText("?", 1);
         });
 
-        btnUp.setOnClickListener(v -> moveCursor("up"));
-        btnDown.setOnClickListener(v -> moveCursor("down"));
-        btnLeft.setOnClickListener(v -> moveCursor("left"));
-        btnRight.setOnClickListener(v -> moveCursor("right"));
+        btnUp.setOnTouchListener(new View.OnTouchListener() {
+            Handler handler = new Handler();
+            Runnable longPressRunnable;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    moveCursor("up"); // 最初に1回カーソル移動
+
+                    longPressRunnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            moveCursor("up");
+                            handler.postDelayed(this, 60); // 60ms後に再実行
+                        }
+                    };
+                    handler.postDelayed(longPressRunnable, 500); // 500ms後に実行開始
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    handler.removeCallbacks(longPressRunnable); // 長押し処理をキャンセル
+                }
+                return false; // クリックイベントも処理したい場合はtrueにする
+            }
+        });
+
+        btnDown.setOnTouchListener(new View.OnTouchListener() {
+            Handler handler = new Handler();
+            Runnable longPressRunnable;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    moveCursor("down"); // 最初に1回カーソル移動
+
+                    longPressRunnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            moveCursor("down");
+                            handler.postDelayed(this, 60); // 60ms後に再実行
+                        }
+                    };
+                    handler.postDelayed(longPressRunnable, 500); // 500ms後に実行開始
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    handler.removeCallbacks(longPressRunnable); // 長押し処理をキャンセル
+                }
+                return false; // クリックイベントも処理したい場合はtrueにする
+            }
+        });
+
+
+        btnLeft.setOnTouchListener(new View.OnTouchListener() {
+            Handler handler = new Handler();
+            Runnable longPressRunnable;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    moveCursor("left"); // 最初に1回カーソル移動
+
+                    longPressRunnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            moveCursor("left");
+                            handler.postDelayed(this, 60); // 60ms後に再実行
+                        }
+                    };
+                    handler.postDelayed(longPressRunnable, 500); // 500ms後に実行開始
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    handler.removeCallbacks(longPressRunnable); // 長押し処理をキャンセル
+                }
+                return false; // クリックイベントも処理したい場合はtrueにする
+            }
+        });
+
+        btnRight.setOnTouchListener(new View.OnTouchListener() {
+            Handler handler = new Handler();
+            Runnable longPressRunnable;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    moveCursor("right"); // 最初に1回カーソル移動
+
+                    longPressRunnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            moveCursor("right");
+                            handler.postDelayed(this, 60); // 60ms後に再実行
+                        }
+                    };
+                    handler.postDelayed(longPressRunnable, 500); // 500ms後に実行開始
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    handler.removeCallbacks(longPressRunnable); // 長押し処理をキャンセル
+                }
+                return false; // クリックイベントも処理したい場合はtrueにする
+            }
+        });
 
         return inputView;
     }
@@ -179,18 +271,71 @@ public class TokiPonaIME extends InputMethodService {
         InputConnection inputConnection = getCurrentInputConnection();
 
         if (inputConnection != null) {
-            CharSequence beforeCursorText = inputConnection.getTextBeforeCursor(100, 0);
-            CharSequence afterCursorText = inputConnection.getTextAfterCursor(100, 0);
+            CharSequence beforeCursorText = inputConnection.getTextBeforeCursor(0xfffff, 0);
+            CharSequence afterCursorText = inputConnection.getTextAfterCursor(0xfffff, 0);
+            CharSequence text = beforeCursorText.toString() + afterCursorText.toString();
 
             int cursorPosition = (beforeCursorText != null ? beforeCursorText.length() : 0);
 
             switch (direction) {
                 case "up":
-                    // 上方向のカーソル移動（必要ならカスタマイズ）
+                    // 上方向のカーソル移動
+                    // 前の行の開始位置を計算 (改行文字 '\n' を探す)
+                    int previousLineStart = -1;
+                    if (beforeCursorText != null) {
+                        for (int i = beforeCursorText.length() - 1, k = 0; i >= 0; i--, k++) {
+                            if (beforeCursorText.charAt(i) == '\n') {
+                                for (int j = i - 1, l = 0; j >= -1; j--, l++) {
+                                    if (j == -1 || beforeCursorText.charAt(j) == '\n') {
+                                        if (l < k) {
+                                            previousLineStart = j + 1;
+                                            break;
+                                        }
+                                        previousLineStart = j + k + 1;
+                                        break;
+                                    }
+                                }
+                                break;
+                            } else if (i == 0) {
+                                previousLineStart = 0;
+                            }
+                        }
+                    }
+                    // カーソル位置を更新
+                    if (previousLineStart != -1) {
+                        inputConnection.setSelection(previousLineStart, previousLineStart);
+                    }
                     break;
 
                 case "down":
-                    // 下方向のカーソル移動（必要ならカスタマイズ）
+                    // 下方向のカーソル移動
+                    // 次の行の開始位置を計算 (改行文字 '\n' を探す)
+                    int nextLineStart = -1;
+                    if (afterCursorText != null) {
+                        int k = 0;
+                        for (int i = beforeCursorText.length() - 1; i > -1 && beforeCursorText.charAt(i) != '\n'; i--, k++);
+                        System.out.println(k);
+                        for (int i = 0; i < afterCursorText.length(); i++) {
+                            if (afterCursorText.charAt(i) == '\n') {
+                                System.out.println(i);
+                                System.out.println(cursorPosition);
+                                int l = 0;
+                                for (int j = i + 1; j < afterCursorText.length() && afterCursorText.charAt(j) != '\n'; j++, l++);
+                                if (l < k) {
+                                    nextLineStart = cursorPosition + i + l + 1;
+                                    break;
+                                }
+                                nextLineStart = cursorPosition + i + k + 1;
+                                break;
+                            }
+                        }
+                    }
+                    System.out.println(nextLineStart);
+
+                    // カーソル位置を更新
+                    if (nextLineStart != -1) {
+                        inputConnection.setSelection(nextLineStart, nextLineStart);
+                    }
                     break;
 
                 case "left":
@@ -270,7 +415,7 @@ public class TokiPonaIME extends InputMethodService {
 
         InputConnection inputConnection = getCurrentInputConnection();
         if (inputConnection != null) {
-            CharSequence currentText = inputConnection.getTextBeforeCursor(100, 0);
+            CharSequence currentText = inputConnection.getTextBeforeCursor(0xfffff, 0);
             if (currentText != null) {
                 updateCandidateList(currentText.toString());
             }
