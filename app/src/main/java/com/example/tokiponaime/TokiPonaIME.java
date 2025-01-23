@@ -1,5 +1,7 @@
 package com.example.tokiponaime;
 
+import static androidx.core.util.TypedValueCompat.dpToPx;
+
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,6 +22,8 @@ public class TokiPonaIME extends InputMethodService {
     @Override
     public View onCreateInputView() {
         inputView = getLayoutInflater().inflate(R.layout.keyboard_layout, null);
+
+        initCandidatesView(inputView);
 
         // 母音
         Button btnA = inputView.findViewById(R.id.btn_a);
@@ -236,11 +240,8 @@ public class TokiPonaIME extends InputMethodService {
         return suggestions;
     }
 
-    @Override
-    public View onCreateCandidatesView() {
-        // レイアウトをインフレート
-        candidatesView = getLayoutInflater().inflate(R.layout.candidates_view, null);
-        LinearLayout candidateList = candidatesView.findViewById(R.id.candidate_list);
+    public View initCandidatesView(View inputView) {
+        LinearLayout candidateList = inputView.findViewById(R.id.candidate_list);
 
         // 仮の候補リスト
         List<String> candidates = getSuggestions("");
@@ -278,7 +279,7 @@ public class TokiPonaIME extends InputMethodService {
 
     private void updateCandidateList(String input) {
         // 候補リストの親ビューをクリア
-        LinearLayout candidateList = candidatesView.findViewById(R.id.candidate_list);
+        LinearLayout candidateList = inputView.findViewById(R.id.candidate_list);
         candidateList.removeAllViews();
 
         List<String> suggestions = getSuggestions("");;
@@ -325,7 +326,7 @@ public class TokiPonaIME extends InputMethodService {
         super.onStartInput(attribute, restarting);
 
         // 入力が開始されたら候補ビューを表示
-        setCandidatesViewShown(true);
+//        setCandidatesViewShown(true);
 
         InputConnection inputConnection = getCurrentInputConnection();
         if (inputConnection != null) {
@@ -334,7 +335,10 @@ public class TokiPonaIME extends InputMethodService {
     }
 
     private void updateCandidates(List<String> candidates) {
-        LinearLayout candidateList = candidatesView.findViewById(R.id.candidate_list);
+        if (inputView == null) {
+            inputView = getLayoutInflater().inflate(R.layout.keyboard_layout, null);
+        }
+        LinearLayout candidateList = inputView.findViewById(R.id.candidate_list);
         candidateList.removeAllViews();
 
         for (String candidate : candidates) {
@@ -342,10 +346,16 @@ public class TokiPonaIME extends InputMethodService {
             button.setText(candidate);
             button.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
+                    dpToPx(50)
             ));
             button.setOnClickListener(v -> getCurrentInputConnection().commitText(candidate + " ", 1));
             candidateList.addView(button);
         }
+    }
+
+    // dpをピクセルに変換するヘルパーメソッド
+    public int dpToPx(int dp) {
+        float density = this.getResources().getDisplayMetrics().density;
+        return Math.round((float) dp * density);
     }
 }
