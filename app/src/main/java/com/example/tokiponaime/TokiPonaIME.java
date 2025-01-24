@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.view.inputmethod.InputConnection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TokiPonaIME extends InputMethodService {
@@ -370,6 +371,9 @@ public class TokiPonaIME extends InputMethodService {
             "tan", "taso", "tawa", "telo", "tenpo", "toki", "tomo", "tonsi", "tu", "unpa", "uta",
             "utala", "walo", "wan", "waso", "wawa", "weka", "wile"
     };
+    private final String[] tokiPonaMarkers = {
+            "e", "li", "pi", "la", "o", "a", "n", "seme", "taso"
+    };
 
     private List<String> getSuggestions(String input) {
         if (input.isEmpty()) {
@@ -383,22 +387,17 @@ public class TokiPonaIME extends InputMethodService {
             }
         }
         return suggestions;
-    }
+    };
 
     public View initCandidatesView(View inputView) {
         LinearLayout candidateList = inputView.findViewById(R.id.candidate_list);
 
         // 仮の候補リスト
-        List<String> candidates = getSuggestions("a");
+        List<String> candidates = Arrays.asList(tokiPonaMarkers);
 
         // 候補を追加
         for (String candidate : candidates) {
-            Button button = new Button(this);
-            button.setText(candidate);
-            button.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            ));
+            Button button = candidateButton(candidate);
             button.setOnClickListener(v -> {
                 // 候補が選択されたときの処理
                 getCurrentInputConnection().commitText(candidate, 1);
@@ -414,6 +413,7 @@ public class TokiPonaIME extends InputMethodService {
         super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd);
 
         InputConnection inputConnection = getCurrentInputConnection();
+
         if (inputConnection != null) {
             CharSequence currentText = inputConnection.getTextBeforeCursor(0xfffff, 0);
             if (currentText != null) {
@@ -438,28 +438,38 @@ public class TokiPonaIME extends InputMethodService {
             }
         }
 
+        if (suggestions.isEmpty()) {
+            suggestions = Arrays.asList(tokiPonaMarkers);
+        }
+
         // 候補ボタンを追加
         for (String suggestion : suggestions) {
-            Button button = new Button(this);
-            button.setText(suggestion);
-            button.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            ));
+            Button button = candidateButton(suggestion);
             button.setOnClickListener(v -> {
                 InputConnection inputConnection = getCurrentInputConnection();
                 if (inputConnection != null) {
-                    // 入力中の文字列を削除
-                    CharSequence currentText = inputConnection.getExtractedText(new ExtractedTextRequest(), 0).text;
-                    if (currentText != null) {
-                        // 入力中の文字列を削除
-                        final String[] parts = ((String)currentText).split("( |\n)");
-                        String last = parts[parts.length - 1];
-                        inputConnection.deleteSurroundingText(last.length(), 0);
+                    CharSequence beforeCursorText = inputConnection.getTextBeforeCursor(0xfffff, 0);
+                    CharSequence afterCursorText = inputConnection.getTextAfterCursor(0xfffff, 0);
+
+                    int wordLength = 0;
+
+                    for (int i = beforeCursorText.length() - 1; i >= -1; i--, wordLength++) {
+                        if (i == -1 || beforeCursorText.charAt(i) == ' ' || beforeCursorText.charAt(i) == '\n') {
+                            break;
+                        }
+                        inputConnection.deleteSurroundingText(1, 0);
+                    }
+
+                    for (int i = 0; i < afterCursorText.length(); i++, wordLength++) {
+                        inputConnection.deleteSurroundingText(0, 1);
+                        if (i == afterCursorText.length() || afterCursorText.charAt(i) == ' ' || afterCursorText.charAt(i) == '\n') {
+                            break;
+                        }
                     }
 
                     // 候補が選択されたときに入力を確定
                     inputConnection.commitText(suggestion + " ", 1);
+                    updateCandidates(Arrays.asList(tokiPonaMarkers));
                 }
             });
             candidateList.addView(button);
@@ -469,9 +479,6 @@ public class TokiPonaIME extends InputMethodService {
     @Override
     public void onStartInput(EditorInfo attribute, boolean restarting) {
         super.onStartInput(attribute, restarting);
-
-        // 入力が開始されたら候補ビューを表示
-//        setCandidatesViewShown(true);
 
         InputConnection inputConnection = getCurrentInputConnection();
         if (inputConnection != null) {
@@ -487,15 +494,20 @@ public class TokiPonaIME extends InputMethodService {
         candidateList.removeAllViews();
 
         for (String candidate : candidates) {
-            Button button = new Button(this);
-            button.setText(candidate);
-            button.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            ));
+            Button button = candidateButton(candidate);
             button.setOnClickListener(v -> getCurrentInputConnection().commitText(candidate + " ", 1));
             candidateList.addView(button);
         }
+    }
+
+    public Button candidateButton(String candidate) {
+        Button button = new Button(this);
+        button.setText(candidate);
+        button.setLayoutParams(new LinearLayout.LayoutParams(
+                dpToPx(30 + candidate.length()*8),
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+        return button;
     }
 
     // dpをピクセルに変換するヘルパーメソッド
