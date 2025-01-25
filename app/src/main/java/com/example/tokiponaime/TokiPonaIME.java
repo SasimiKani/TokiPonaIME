@@ -17,7 +17,6 @@ import java.util.List;
 public class TokiPonaIME extends InputMethodService {
 
     final private InputButtons inputButtons = new InputButtons();
-    final private Common common = new Common();
 
     private View inputViewContainer;
     private View inputView;
@@ -44,6 +43,10 @@ public class TokiPonaIME extends InputMethodService {
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
+
+        System.out.println("width: " + screenWidth + " height: " + screenHeight);
+        System.out.println("area height: " + 0.34);
+        System.out.println("grid height: " + screenHeight);
 
         inputButtons.initInputButtons(this, inputView, inputView_freq, screenWidth, screenHeight);
         inputButtons.initInputButtons(this, inputView_freq, inputView_qwerty, screenWidth, screenHeight);
@@ -86,7 +89,7 @@ public class TokiPonaIME extends InputMethodService {
 
         InputConnection inputConnection = getCurrentInputConnection();
         if (inputConnection != null) {
-            updateCandidates(common.getSuggestions(""));
+            updateCandidates(Common.getSuggestions(""));
         }
     }
 
@@ -114,24 +117,24 @@ public class TokiPonaIME extends InputMethodService {
         LinearLayout candidateList = visibleLayout.findViewById(R.id.candidate_list);
         candidateList.removeAllViews();
 
-        List<String> suggestions = common.getSuggestions("");
+        List<String> suggestions = Common.getSuggestions("");
         // カーソルが先頭以外にある時
         if (!input.isEmpty() && input.charAt(input.length() - 1) != ' ') {
             if (Character.isAlphabetic(input.charAt(input.length() - 1))) {
                 // 新しい候補を取得
                 String[] inputParts = input.split("[ \n]");
                 String last_input = inputParts[inputParts.length - 1];
-                suggestions = common.getSuggestions(last_input);
+                suggestions = Common.getSuggestions(last_input);
             }
         }
 
         if (suggestions.isEmpty()) {
-            suggestions = Arrays.asList(common.tokiPonaMarkers);
+            suggestions = Arrays.asList(Common.tokiPonaMarkers);
         }
 
         // 候補ボタンを追加
         for (String suggestion : suggestions) {
-            Button button = common.candidateButton(this, suggestion);
+            Button button = Common.candidateButton(this, suggestion);
             button.setOnClickListener(v -> {
                 InputConnection inputConnection = getCurrentInputConnection();
                 if (inputConnection != null) {
@@ -156,7 +159,7 @@ public class TokiPonaIME extends InputMethodService {
 
                     // 候補が選択されたときに入力を確定
                     inputConnection.commitText(suggestion + " ", 1);
-                    updateCandidates(Arrays.asList(common.tokiPonaMarkers));
+                    updateCandidates(Arrays.asList(Common.tokiPonaMarkers));
                 }
             });
             candidateList.addView(button);
@@ -175,7 +178,7 @@ public class TokiPonaIME extends InputMethodService {
         candidateList.removeAllViews();
 
         for (String candidate : candidates) {
-            Button button = common.candidateButton(this, candidate);
+            Button button = Common.candidateButton(this, candidate);
             button.setOnClickListener(v -> getCurrentInputConnection().commitText(candidate + " ", 1));
             candidateList.addView(button);
         }

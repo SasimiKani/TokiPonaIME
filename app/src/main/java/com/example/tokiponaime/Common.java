@@ -8,7 +8,24 @@ import java.util.List;
 
 public class Common {
 
-    public final String[] tokiPonaWords = {
+    public static double AREA_HEIGHT = 0.32;
+    public static double GRID_HEIGHT_50 = AREA_HEIGHT * 0.187;
+    public static double GRID_HEIGHT_55 = GRID_HEIGHT_50 * 1.1;
+    public static double KEY_WIDTH = 0.146;
+    public static double KEY_WIDTH_BS = 0.159;
+    public static double KEY_WIDTH_SPACE = 0.341;
+    public static double KEY_WIDTH_LR = 0.085;
+    public static double KEY_WIDTH_UD = 0.097;
+    public static double KEY_WIDTH_ENTER = KEY_WIDTH;
+    public static double KEY_WIDTH_SYMBOL = 0.122;
+    public static double SPACE_20 = 0.048;
+    public static double SPACE_35 = 0.085;
+
+    public static double MARGIN_1 = GRID_HEIGHT_50;
+    public static double MARGIN_2 = GRID_HEIGHT_50 * 2;
+    public static double MARGIN_3 = GRID_HEIGHT_50 * 3.1;
+
+    public static final String[] tokiPonaWords = {
             "a", "akesi", "ala", "alasa", "ale", "anpa", "ante", "anu", "apeja", "awen", "e",
             "en", "epiku", "esu", "ijo", "ike", "ilo", "insa", "jaki", "jan", "jasima", "jelo",
             "jo", "kala", "kalama", "kama", "kasi", "ken", "kepeken", "kijetesantakalu", "kili", "kin", "kipisi",
@@ -23,7 +40,7 @@ public class Common {
             "tan", "taso", "tawa", "telo", "tenpo", "toki", "tomo", "tonsi", "tu", "unpa", "uta",
             "utala", "walo", "wan", "waso", "wawa", "weka", "wile"
     };
-    public final String[] tokiPonaMarkers = {
+    public static final String[] tokiPonaMarkers = {
             "e", "li", "pi", "la", "o", "a", "n", "seme", "taso"
     };
 
@@ -32,7 +49,7 @@ public class Common {
      * @param input ぱらめーた
      * @return 入力候補
      */
-    public List<String> getSuggestions(String input) {
+    public static List<String> getSuggestions(String input) {
         if (input.isEmpty()) {
             return new ArrayList<>();
         }
@@ -52,7 +69,7 @@ public class Common {
      * @param candidate ぱらめーた
      * @return 入力候補ボタン
      */
-    public Button candidateButton(TokiPonaIME activity, String candidate) {
+    public static Button candidateButton(TokiPonaIME activity, String candidate) {
         Button button = new Button(activity);
         button.setText(candidate);
         button.setLayoutParams(new LinearLayout.LayoutParams(
@@ -63,7 +80,7 @@ public class Common {
     }
 
     // dpをピクセルに変換するヘルパーメソッド
-    public int dpToPx(TokiPonaIME activity, int dp) {
+    public static int dpToPx(TokiPonaIME activity, int dp) {
         float density = activity.getResources().getDisplayMetrics().density;
         return Math.round((float) dp * density);
     }
