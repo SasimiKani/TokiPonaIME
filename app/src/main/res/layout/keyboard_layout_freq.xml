@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--アルファベット配列-->
+<!--カレミトユ配列-->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -89,11 +89,6 @@
                     android:layout_height="50dp">
 
                     <Button
-                        android:id="@+id/btn_j"
-                        android:layout_width="60dp"
-                        android:layout_height="55dp"
-                        android:text="j" />
-                    <Button
                         android:id="@+id/btn_k"
                         android:layout_width="60dp"
                         android:layout_height="55dp"
@@ -109,10 +104,15 @@
                         android:layout_height="55dp"
                         android:text="m" />
                     <Button
-                        android:id="@+id/btn_n"
+                        android:id="@+id/btn_t"
                         android:layout_width="60dp"
                         android:layout_height="55dp"
-                        android:text="n" />
+                        android:text="t" />
+                    <Button
+                        android:id="@+id/btn_j"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="j" />
 
                     <FrameLayout
                         android:layout_width="35dp"/>
@@ -138,15 +138,15 @@
                         android:layout_height="55dp"
                         android:text="p" />
                     <Button
+                        android:id="@+id/btn_n"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="n" />
+                    <Button
                         android:id="@+id/btn_s"
                         android:layout_width="60dp"
                         android:layout_height="55dp"
                         android:text="s" />
-                    <Button
-                        android:id="@+id/btn_t"
-                        android:layout_width="60dp"
-                        android:layout_height="55dp"
-                        android:text="t" />
                     <Button
                         android:id="@+id/btn_w"
                         android:layout_width="60dp"

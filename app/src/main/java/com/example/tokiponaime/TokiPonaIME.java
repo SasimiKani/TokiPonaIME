@@ -24,7 +24,9 @@ public class TokiPonaIME extends InputMethodService {
      */
     @Override
     public View onCreateInputView() {
-        inputView = getLayoutInflater().inflate(R.layout.keyboard_layout, null);
+        //inputView = getLayoutInflater().inflate(R.layout.keyboard_layout, null);
+        //inputView = getLayoutInflater().inflate(R.layout.keyboard_layout_freq, null);
+        inputView = getLayoutInflater().inflate(R.layout.keyboard_layout_qwerty, null);
 
         inputButtons.initInputButtons(this, inputView);
 

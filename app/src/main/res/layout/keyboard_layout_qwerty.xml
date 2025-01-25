@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--アルファベット配列-->
+<!--QWERTY配列-->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -46,25 +46,25 @@
                         android:layout_height="55dp"
                         android:text="a" />
                     <Button
-                        android:id="@+id/btn_e"
+                        android:id="@+id/btn_s"
                         android:layout_width="60dp"
                         android:layout_height="55dp"
-                        android:text="e" />
+                        android:text="s" />
                     <Button
-                        android:id="@+id/btn_i"
+                        android:id="@+id/btn_j"
                         android:layout_width="60dp"
                         android:layout_height="55dp"
-                        android:text="i" />
+                        android:text="j" />
                     <Button
-                        android:id="@+id/btn_o"
+                        android:id="@+id/btn_k"
                         android:layout_width="60dp"
                         android:layout_height="55dp"
-                        android:text="o" />
+                        android:text="k" />
                     <Button
-                        android:id="@+id/btn_u"
+                        android:id="@+id/btn_l"
                         android:layout_width="60dp"
                         android:layout_height="55dp"
-                        android:text="u" />
+                        android:text="l" />
 
                     <Button
                         android:id="@+id/btn_left"
@@ -89,30 +89,30 @@
                     android:layout_height="50dp">
 
                     <Button
-                        android:id="@+id/btn_j"
+                        android:id="@+id/btn_w"
                         android:layout_width="60dp"
                         android:layout_height="55dp"
-                        android:text="j" />
+                        android:text="w" />
                     <Button
-                        android:id="@+id/btn_k"
+                        android:id="@+id/btn_e"
                         android:layout_width="60dp"
                         android:layout_height="55dp"
-                        android:text="k" />
+                        android:text="e" />
                     <Button
-                        android:id="@+id/btn_l"
+                        android:id="@+id/btn_t"
                         android:layout_width="60dp"
                         android:layout_height="55dp"
-                        android:text="l" />
+                        android:text="t" />
                     <Button
-                        android:id="@+id/btn_m"
+                        android:id="@+id/btn_u"
                         android:layout_width="60dp"
                         android:layout_height="55dp"
-                        android:text="m" />
+                        android:text="u" />
                     <Button
-                        android:id="@+id/btn_n"
+                        android:id="@+id/btn_i"
                         android:layout_width="60dp"
                         android:layout_height="55dp"
-                        android:text="n" />
+                        android:text="i" />
 
                     <FrameLayout
                         android:layout_width="35dp"/>
@@ -133,25 +133,25 @@
                         android:layout_width="20dp"/>
 
                     <Button
+                        android:id="@+id/btn_n"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="n" />
+                    <Button
+                        android:id="@+id/btn_m"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="m" />
+                    <Button
+                        android:id="@+id/btn_o"
+                        android:layout_width="60dp"
+                        android:layout_height="55dp"
+                        android:text="o" />
+                    <Button
                         android:id="@+id/btn_p"
                         android:layout_width="60dp"
                         android:layout_height="55dp"
                         android:text="p" />
-                    <Button
-                        android:id="@+id/btn_s"
-                        android:layout_width="60dp"
-                        android:layout_height="55dp"
-                        android:text="s" />
-                    <Button
-                        android:id="@+id/btn_t"
-                        android:layout_width="60dp"
-                        android:layout_height="55dp"
-                        android:text="t" />
-                    <Button
-                        android:id="@+id/btn_w"
-                        android:layout_width="60dp"
-                        android:layout_height="55dp"
-                        android:text="w" />
 
                     <FrameLayout
                         android:layout_width="20dp"/>
