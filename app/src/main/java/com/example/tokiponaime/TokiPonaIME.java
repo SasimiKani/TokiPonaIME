@@ -12,10 +12,9 @@ import java.util.List;
 
 public class TokiPonaIME extends InputMethodService {
 
-    private InputButtons inputButtons = new InputButtons();
-    private Common common = new Common();
+    final private InputButtons inputButtons = new InputButtons();
+    final private Common common = new Common();
 
-    private View candidatesView;
     private View inputViewContainer;
     private View inputView;
     private View inputView_freq;
@@ -23,7 +22,7 @@ public class TokiPonaIME extends InputMethodService {
 
     /**
      * キーボードが作られる処理
-     * @return
+     * @return キーボード配列コンテナ
      */
     @Override
     public View onCreateInputView() {
@@ -42,12 +41,12 @@ public class TokiPonaIME extends InputMethodService {
 
     /**
      * なんか更新処理
-     * @param oldSelStart
-     * @param oldSelEnd
-     * @param newSelStart
-     * @param newSelEnd
-     * @param candidatesStart
-     * @param candidatesEnd
+     * @param oldSelStart ぱらめーた
+     * @param oldSelEnd ぱらめーた
+     * @param newSelStart ぱらめーた
+     * @param newSelEnd ぱらめーた
+     * @param candidatesStart ぱらめーた
+     * @param candidatesEnd ぱらめーた
      */
     @Override
     public void onUpdateSelection(int oldSelStart, int oldSelEnd, int newSelStart, int newSelEnd, int candidatesStart, int candidatesEnd) {
@@ -65,8 +64,8 @@ public class TokiPonaIME extends InputMethodService {
 
     /**
      * 入力されたときの処理
-     * @param attribute
-     * @param restarting
+     * @param attribute ぱらめーた
+     * @param restarting ぱらめーた
      */
     @Override
     public void onStartInput(EditorInfo attribute, boolean restarting) {
@@ -80,19 +79,19 @@ public class TokiPonaIME extends InputMethodService {
 
     /**
      * 入力候補リストを更新する処理
-     * @param input
+     * @param input ぱらめーた
      */
     private void updateCandidateList(String input) {
         // 候補リストの親ビューをクリア
         LinearLayout candidateList = inputViewContainer.findViewById(R.id.candidate_list);
         candidateList.removeAllViews();
 
-        List<String> suggestions = common.getSuggestions("");;
+        List<String> suggestions = common.getSuggestions("");
         // カーソルが先頭以外にある時
         if (!input.isEmpty() && input.charAt(input.length() - 1) != ' ') {
             if (Character.isAlphabetic(input.charAt(input.length() - 1))) {
                 // 新しい候補を取得
-                String[] inputParts = input.split("( |\n)");
+                String[] inputParts = input.split("[ \n]");
                 String last_input = inputParts[inputParts.length - 1];
                 suggestions = common.getSuggestions(last_input);
             }
@@ -138,7 +137,7 @@ public class TokiPonaIME extends InputMethodService {
 
     /**
      * 入力候補が選択されたときの処理
-     * @param candidates
+     * @param candidates ぱらめーた
      */
     private void updateCandidates(List<String> candidates) {
         if (inputViewContainer == null) {

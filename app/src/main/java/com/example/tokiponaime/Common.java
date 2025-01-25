@@ -1,6 +1,5 @@
 package com.example.tokiponaime;
 
-import android.app.Activity;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -30,8 +29,8 @@ public class Common {
 
     /**
      * 入力中の文字列から入力候補を生成して返す処理
-     * @param input
-     * @return
+     * @param input ぱらめーた
+     * @return 入力候補
      */
     public List<String> getSuggestions(String input) {
         if (input.isEmpty()) {
@@ -45,13 +44,13 @@ public class Common {
             }
         }
         return suggestions;
-    };
+    }
 
     /**
      * 入力候補ボタンを返す
-     * @param activity
-     * @param candidate
-     * @return
+     * @param activity ぱらめーた
+     * @param candidate ぱらめーた
+     * @return 入力候補ボタン
      */
     public Button candidateButton(TokiPonaIME activity, String candidate) {
         Button button = new Button(activity);

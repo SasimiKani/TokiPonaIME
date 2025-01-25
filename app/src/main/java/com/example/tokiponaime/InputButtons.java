@@ -1,7 +1,5 @@
 package com.example.tokiponaime;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
 import android.content.Context;
 import android.os.Handler;
 import android.view.MotionEvent;
@@ -17,12 +15,12 @@ import java.util.List;
 
 public class InputButtons {
 
-    private Common common = new Common();
+    final private Common common = new Common();
 
     /**
      * キーボタンを作成する処理
-     * @param activity
-     * @param inputView
+     * @param activity ぱらめーた
+     * @param inputView ぱらめーた
      */
     public void initInputButtons(TokiPonaIME activity, View inputView, View nextView) {
 
@@ -61,60 +59,28 @@ public class InputButtons {
         Button btnLeft = inputView.findViewById(R.id.btn_left);
         Button btnRight = inputView.findViewById(R.id.btn_right);
 
-        btnA.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText("a", 1);
-        });
-        btnE.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText("e", 1);
-        });
-        btnI.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText("i", 1);
-        });
-        btnO.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText("o", 1);
-        });
-        btnU.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText("u", 1);
-        });
+        btnA.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("a", 1));
+        btnE.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("e", 1));
+        btnI.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("i", 1));
+        btnO.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("o", 1));
+        btnU.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("u", 1));
 
-        btnJ.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText("j", 1);
-        });
-        btnK.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText("k", 1);
-        });
-        btnL.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText("l", 1);
-        });
-        btnM.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText("m", 1);
-        });
-        btnN.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText("n", 1);
-        });
-        btnP.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText("p", 1);
-        });
-        btnS.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText("s", 1);
-        });
-        btnT.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText("t", 1);
-        });
-        btnW.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText("w", 1);
-        });
+        btnJ.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("j", 1));
+        btnK.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("k", 1));
+        btnL.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("l", 1));
+        btnM.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("m", 1));
+        btnN.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("n", 1));
+        btnP.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("p", 1));
+        btnS.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("s", 1));
+        btnT.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("t", 1));
+        btnW.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("w", 1));
 
-        btnEnter.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText("\n", 1);
-        });
-        btnSpace.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText(" ", 1);
-        });
+        btnEnter.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("\n", 1));
+        btnSpace.setOnClickListener(v -> activity.getCurrentInputConnection().commitText(" ", 1));
         btnBackSpace.setOnTouchListener(new View.OnTouchListener() {
-            private Handler handler = new Handler();
+            final private Handler handler = new Handler();
             private Runnable deleteRunnable;
-            private boolean isLongPress = false;  // 長押しの判定フラグ
+            // 長押しの判定フラグ
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -127,7 +93,6 @@ public class InputButtons {
                             inputConnection.deleteSurroundingText(1, 0);
 
                             // 長押しの処理を開始
-                            isLongPress = false;
                             deleteRunnable = new Runnable() {
                                 @Override
                                 public void run() {
@@ -135,11 +100,10 @@ public class InputButtons {
                                             new ExtractedTextRequest(), 0
                                     ).text;
 
-                                    if (currentText.length() > 0 && currentText != null) {
+                                    if (currentText.length() > 0) {
                                         inputConnection.deleteSurroundingText(1, 0);
                                     }
                                     handler.postDelayed(this, 60);  // 100msごとに繰り返し削除
-                                    isLongPress = true;  // 長押しが始まった
                                 }
                             };
                             handler.postDelayed(deleteRunnable, 500);  // 500ms後に繰り返し処理を開始
@@ -154,24 +118,14 @@ public class InputButtons {
                 return true;
             }
         });
-        btnPeriod.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText(".", 1);
-        });
-        btnComma.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText(",", 1);
-        });
-        btnCoron.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText(":", 1);
-        });
-        btnExclamation.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText("!", 1);
-        });
-        btnQuestion.setOnClickListener(v -> {
-            activity.getCurrentInputConnection().commitText("?", 1);
-        });
+        btnPeriod.setOnClickListener(v -> activity.getCurrentInputConnection().commitText(".", 1));
+        btnComma.setOnClickListener(v -> activity.getCurrentInputConnection().commitText(",", 1));
+        btnCoron.setOnClickListener(v -> activity.getCurrentInputConnection().commitText(":", 1));
+        btnExclamation.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("!", 1));
+        btnQuestion.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("?", 1));
 
         btnUp.setOnTouchListener(new View.OnTouchListener() {
-            Handler handler = new Handler();
+            final Handler handler = new Handler();
             Runnable longPressRunnable;
 
             @Override
@@ -195,7 +149,7 @@ public class InputButtons {
         });
 
         btnDown.setOnTouchListener(new View.OnTouchListener() {
-            Handler handler = new Handler();
+            final Handler handler = new Handler();
             Runnable longPressRunnable;
 
             @Override
@@ -220,7 +174,7 @@ public class InputButtons {
 
 
         btnLeft.setOnTouchListener(new View.OnTouchListener() {
-            Handler handler = new Handler();
+            final Handler handler = new Handler();
             Runnable longPressRunnable;
 
             @Override
@@ -244,7 +198,7 @@ public class InputButtons {
         });
 
         btnRight.setOnTouchListener(new View.OnTouchListener() {
-            Handler handler = new Handler();
+            final Handler handler = new Handler();
             Runnable longPressRunnable;
 
             @Override
@@ -360,8 +314,8 @@ public class InputButtons {
 
     /**
      * カーソル移動の処理
-     * @param activity
-     * @param direction
+     * @param activity ぱらめーた
+     * @param direction ぱらめーた
      */
     private void moveCursor(TokiPonaIME activity, String direction) {
         InputConnection inputConnection = activity.getCurrentInputConnection();
@@ -369,7 +323,6 @@ public class InputButtons {
         if (inputConnection != null) {
             CharSequence beforeCursorText = inputConnection.getTextBeforeCursor(0xfffff, 0);
             CharSequence afterCursorText = inputConnection.getTextAfterCursor(0xfffff, 0);
-            CharSequence text = beforeCursorText.toString() + afterCursorText.toString();
 
             int cursorPosition = (beforeCursorText != null ? beforeCursorText.length() : 0);
 
@@ -453,8 +406,8 @@ public class InputButtons {
 
     /**
      * 入力候補リストを初期化する処理
-     * @param activity
-     * @param inputView
+     * @param activity ぱらめーた
+     * @param inputView ぱらめーた
      */
     public void initCandidatesView(TokiPonaIME activity, View inputView) {
         LinearLayout candidateList = inputView.findViewById(R.id.candidate_list);
