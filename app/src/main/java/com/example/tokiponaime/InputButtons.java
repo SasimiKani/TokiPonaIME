@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class InputButtons {
-    
+
     private Common common = new Common();
 
     /**
@@ -24,7 +24,7 @@ public class InputButtons {
      * @param activity
      * @param inputView
      */
-    public void initInputButtons(TokiPonaIME activity, View inputView) {
+    public void initInputButtons(TokiPonaIME activity, View inputView, View nextView) {
 
         initCandidatesView(activity, inputView);
 
@@ -348,7 +348,8 @@ public class InputButtons {
             return true;
         });
         btnExclamation.setOnLongClickListener(v -> {
-            //activity.getCurrentInputConnection().commitText("!", 1);
+            nextView.setVisibility(View.VISIBLE);
+            inputView.setVisibility(View.GONE);
             return true;
         });
         btnQuestion.setOnLongClickListener(v -> {

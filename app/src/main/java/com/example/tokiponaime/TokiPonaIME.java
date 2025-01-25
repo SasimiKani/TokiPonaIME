@@ -16,7 +16,10 @@ public class TokiPonaIME extends InputMethodService {
     private Common common = new Common();
 
     private View candidatesView;
+    private View inputViewContainer;
     private View inputView;
+    private View inputView_freq;
+    private View inputView_qwerty;
 
     /**
      * キーボードが作られる処理
@@ -24,13 +27,17 @@ public class TokiPonaIME extends InputMethodService {
      */
     @Override
     public View onCreateInputView() {
-        //inputView = getLayoutInflater().inflate(R.layout.keyboard_layout, null);
-        //inputView = getLayoutInflater().inflate(R.layout.keyboard_layout_freq, null);
-        inputView = getLayoutInflater().inflate(R.layout.keyboard_layout_qwerty, null);
+        inputViewContainer = getLayoutInflater().inflate(R.layout.keyboard_layouts_container, null);
 
-        inputButtons.initInputButtons(this, inputView);
+        inputView = inputViewContainer.findViewById(R.id.keyboard_layout);
+        inputView_freq = inputViewContainer.findViewById(R.id.keyboard_layout_freq);
+        inputView_qwerty = inputViewContainer.findViewById(R.id.keyboard_layout_qwerty);
 
-        return inputView;
+        inputButtons.initInputButtons(this, inputView, inputView_freq);
+        inputButtons.initInputButtons(this, inputView_freq, inputView_qwerty);
+        inputButtons.initInputButtons(this, inputView_qwerty, inputView);
+
+        return inputViewContainer;
     }
 
     /**
@@ -77,7 +84,7 @@ public class TokiPonaIME extends InputMethodService {
      */
     private void updateCandidateList(String input) {
         // 候補リストの親ビューをクリア
-        LinearLayout candidateList = inputView.findViewById(R.id.candidate_list);
+        LinearLayout candidateList = inputViewContainer.findViewById(R.id.candidate_list);
         candidateList.removeAllViews();
 
         List<String> suggestions = common.getSuggestions("");;
@@ -134,10 +141,10 @@ public class TokiPonaIME extends InputMethodService {
      * @param candidates
      */
     private void updateCandidates(List<String> candidates) {
-        if (inputView == null) {
-            inputView = getLayoutInflater().inflate(R.layout.keyboard_layout, null);
+        if (inputViewContainer == null) {
+            inputViewContainer = getLayoutInflater().inflate(R.layout.keyboard_layout, null);
         }
-        LinearLayout candidateList = inputView.findViewById(R.id.candidate_list);
+        LinearLayout candidateList = inputViewContainer.findViewById(R.id.candidate_list);
         candidateList.removeAllViews();
 
         for (String candidate : candidates) {
