@@ -308,8 +308,19 @@ public class InputButtons {
             return true;
         });
         btnExclamation.setOnLongClickListener(v -> {
+            // 表示するレイアウトを切り替える
             nextView.setVisibility(View.VISIBLE);
             inputView.setVisibility(View.GONE);
+
+            // 候補リストを更新
+            InputConnection inputConnection = activity.getCurrentInputConnection();
+
+            if (inputConnection != null) {
+                CharSequence currentText = inputConnection.getTextBeforeCursor(0xfffff, 0);
+                if (currentText != null) {
+                    activity.updateCandidateList(currentText.toString());
+                }
+            }
             return true;
         });
         btnQuestion.setOnLongClickListener(v -> {

@@ -7,6 +7,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.inputmethodservice.InputMethodService;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.view.inputmethod.InputConnection;
 
@@ -90,12 +91,27 @@ public class TokiPonaIME extends InputMethodService {
     }
 
     /**
+     * 表示中のレイアウトを特定するメソッド
+     */
+    private View getVisibleLayout(FrameLayout container) {
+        for (int i = 0; i < container.getChildCount(); i++) {
+            View child = container.getChildAt(i);
+            if (child.getVisibility() == View.VISIBLE) {
+                return child;
+            }
+        }
+        return null; // 表示中のレイアウトがない場合
+    }
+
+    /**
      * 入力候補リストを更新する処理
      * @param input ぱらめーた
      */
-    private void updateCandidateList(String input) {
+    public void updateCandidateList(String input) {
+        View visibleLayout = getVisibleLayout((FrameLayout) inputViewContainer);
+
         // 候補リストの親ビューをクリア
-        LinearLayout candidateList = inputViewContainer.findViewById(R.id.candidate_list);
+        LinearLayout candidateList = visibleLayout.findViewById(R.id.candidate_list);
         candidateList.removeAllViews();
 
         List<String> suggestions = common.getSuggestions("");
