@@ -8,6 +8,8 @@ import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 
 import java.util.Arrays;
@@ -19,10 +21,14 @@ public class InputButtons {
 
     /**
      * キーボタンを作成する処理
-     * @param activity ぱらめーた
-     * @param inputView ぱらめーた
+     *
+     * @param activity    ぱらめーた
+     * @param inputView   ぱらめーた
+     * @param screenWidth
      */
-    public void initInputButtons(TokiPonaIME activity, View inputView, View nextView) {
+    public void initInputButtons(TokiPonaIME activity, View inputView, View nextView, int screenWidth, int screenHeight) {
+
+        resizeButtons(inputView, screenWidth, screenHeight);
 
         initCandidatesView(activity, inputView);
 
@@ -310,6 +316,83 @@ public class InputButtons {
             //activity.getCurrentInputConnection().commitText("?", 1);
             return true;
         });
+    }
+
+    /**
+     * サイズ調整
+     */
+    private void resizeButtons(View inputView, int screenWidth, int screenHeight) {
+
+        int resize = (int) (screenHeight * 0.34);
+        inputView.findViewById(R.id.keyboard_table).getLayoutParams().height = resize;
+
+        resize = (int) (resize * 0.17); // 50dp
+        inputView.findViewById(R.id.grid_layout_4).getLayoutParams().height = resize;
+
+        int marginTop = resize;
+
+        resize = (int) (resize * 1.1); // 55dp
+        inputView.findViewById(R.id.grid_layout_1).getLayoutParams().height = resize;
+        inputView.findViewById(R.id.grid_layout_2).getLayoutParams().height = resize;
+        inputView.findViewById(R.id.grid_layout_3).getLayoutParams().height = resize;
+
+        resize = (int) (screenWidth * 0.146);
+        inputView.findViewById(R.id.btn_e).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.btn_a).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.btn_i).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.btn_o).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.btn_u).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.btn_j).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.btn_k).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.btn_l).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.btn_m).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.btn_n).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.btn_p).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.btn_s).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.btn_t).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.btn_w).getLayoutParams().width = resize;
+
+        inputView.findViewById(R.id.btn_enter).getLayoutParams().width = resize;
+
+        resize = (int) (screenWidth * 0.159);
+        inputView.findViewById(R.id.btn_back_space).getLayoutParams().width = resize;
+
+        resize = (int) (screenWidth * 0.085);
+        inputView.findViewById(R.id.btn_left).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.btn_right).getLayoutParams().width = resize;
+        resize = (int) (screenWidth * 0.097);
+        inputView.findViewById(R.id.btn_down).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.btn_up).getLayoutParams().width = resize;
+
+        resize = (int) (screenWidth * 0.122);
+        inputView.findViewById(R.id.btn_period).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.btn_comma).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.btn_coron).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.btn_exclamation).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.btn_question).getLayoutParams().width = resize;
+
+        resize = (int) (screenWidth * 0.341);
+        inputView.findViewById(R.id.btn_space).getLayoutParams().width = resize;
+
+        resize = (int) (screenWidth * 0.048); // space 20pd
+        inputView.findViewById(R.id.space_20_1).getLayoutParams().width = resize;
+        inputView.findViewById(R.id.space_20_2).getLayoutParams().width = resize;
+
+        resize = (int) (screenWidth * 0.085); // space 35pd
+        inputView.findViewById(R.id.space_35).getLayoutParams().width = resize;
+
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) inputView.findViewById(R.id.grid_layout_1).getLayoutParams();
+        params.topMargin = marginTop;
+        inputView.findViewById(R.id.grid_layout_1).setLayoutParams(params);
+
+        params = (FrameLayout.LayoutParams) inputView.findViewById(R.id.grid_layout_3).getLayoutParams();
+        params.topMargin = marginTop * 2;
+        inputView.findViewById(R.id.grid_layout_3).setLayoutParams(params);
+
+        params = (FrameLayout.LayoutParams) inputView.findViewById(R.id.grid_layout_4).getLayoutParams();
+        params.topMargin = (int) (marginTop * 3.1);
+        inputView.findViewById(R.id.grid_layout_4).setLayoutParams(params);
+
     }
 
     /**

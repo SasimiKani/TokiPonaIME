@@ -1,6 +1,9 @@
 package com.example.tokiponaime;
 
+import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.inputmethodservice.InputMethodService;
@@ -32,9 +35,18 @@ public class TokiPonaIME extends InputMethodService {
         inputView_freq = inputViewContainer.findViewById(R.id.keyboard_layout_freq);
         inputView_qwerty = inputViewContainer.findViewById(R.id.keyboard_layout_qwerty);
 
-        inputButtons.initInputButtons(this, inputView, inputView_freq);
-        inputButtons.initInputButtons(this, inputView_freq, inputView_qwerty);
-        inputButtons.initInputButtons(this, inputView_qwerty, inputView);
+        inputView_freq.setVisibility(View.GONE);
+        inputView_qwerty.setVisibility(View.GONE);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+        int screenWidth = displayMetrics.widthPixels;
+        int screenHeight = displayMetrics.heightPixels;
+
+        inputButtons.initInputButtons(this, inputView, inputView_freq, screenWidth, screenHeight);
+        inputButtons.initInputButtons(this, inputView_freq, inputView_qwerty, screenWidth, screenHeight);
+        inputButtons.initInputButtons(this, inputView_qwerty, inputView, screenWidth, screenHeight);
 
         return inputViewContainer;
     }
