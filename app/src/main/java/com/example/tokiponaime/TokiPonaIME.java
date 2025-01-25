@@ -16,8 +16,6 @@ import java.util.List;
 
 public class TokiPonaIME extends InputMethodService {
 
-    final private InputButtons inputButtons = new InputButtons();
-
     private View inputViewContainer;
     private View inputView;
     private View inputView_freq;
@@ -43,16 +41,38 @@ public class TokiPonaIME extends InputMethodService {
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
-
+/*
         System.out.println("width: " + screenWidth + " height: " + screenHeight);
-        System.out.println("area height: " + 0.34);
-        System.out.println("grid height: " + screenHeight);
-
-        inputButtons.initInputButtons(this, inputView, inputView_freq, screenWidth, screenHeight);
-        inputButtons.initInputButtons(this, inputView_freq, inputView_qwerty, screenWidth, screenHeight);
-        inputButtons.initInputButtons(this, inputView_qwerty, inputView, screenWidth, screenHeight);
+        System.out.println("area height: " + (int) (screenHeight * Common.AREA_HEIGHT));
+        System.out.println("grid height(50): " + (int) (screenHeight * Common.GRID_HEIGHT_50));
+        System.out.println("grid height(55): " + (int) (screenHeight * Common.GRID_HEIGHT_55));
+        System.out.println("KEY_WIDTH: " + (int) (screenHeight * Common.KEY_WIDTH));
+        System.out.println("KEY_WIDTH_LR: " + (int) (screenHeight * Common.KEY_WIDTH_LR));
+        System.out.println("KEY_WIDTH_UD: " + (int) (screenHeight * Common.KEY_WIDTH_UD));
+        System.out.println("KEY_WIDTH_BS: " + (int) (screenHeight * Common.KEY_WIDTH_BS));
+        System.out.println("KEY_WIDTH_ENTER: " + (int) (screenHeight * Common.KEY_WIDTH_ENTER));
+        System.out.println("KEY_WIDTH_SPACE: " + (int) (screenHeight * Common.KEY_WIDTH_SPACE));
+*/
+        InputButtons.initInputButtons(this, inputView, inputView_freq, screenWidth, screenHeight);
+        InputButtons.initInputButtons(this, inputView_freq, inputView_qwerty, screenWidth, screenHeight);
+        InputButtons.initInputButtons(this, inputView_qwerty, inputView, screenWidth, screenHeight);
 
         return inputViewContainer;
+    }
+
+    /**
+     * 入力されたときの処理
+     * @param attribute ぱらめーた
+     * @param restarting ぱらめーた
+     */
+    @Override
+    public void onStartInput(EditorInfo attribute, boolean restarting) {
+        super.onStartInput(attribute, restarting);
+
+        InputConnection inputConnection = getCurrentInputConnection();
+        if (inputConnection != null) {
+            updateCandidates(Common.getSuggestions(""));
+        }
     }
 
     /**
@@ -75,21 +95,6 @@ public class TokiPonaIME extends InputMethodService {
             if (currentText != null) {
                 updateCandidateList(currentText.toString());
             }
-        }
-    }
-
-    /**
-     * 入力されたときの処理
-     * @param attribute ぱらめーた
-     * @param restarting ぱらめーた
-     */
-    @Override
-    public void onStartInput(EditorInfo attribute, boolean restarting) {
-        super.onStartInput(attribute, restarting);
-
-        InputConnection inputConnection = getCurrentInputConnection();
-        if (inputConnection != null) {
-            updateCandidates(Common.getSuggestions(""));
         }
     }
 

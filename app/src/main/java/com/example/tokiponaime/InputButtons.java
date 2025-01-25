@@ -24,7 +24,7 @@ public class InputButtons {
      * @param inputView   ぱらめーた
      * @param screenWidth
      */
-    public void initInputButtons(TokiPonaIME activity, View inputView, View nextView, int screenWidth, int screenHeight) {
+    public static void initInputButtons(TokiPonaIME activity, View inputView, View nextView, int screenWidth, int screenHeight) {
 
         resizeButtons(inputView, screenWidth, screenHeight);
 
@@ -330,7 +330,7 @@ public class InputButtons {
     /**
      * サイズ調整
      */
-    private void resizeButtons(View inputView, int screenWidth, int screenHeight) {
+    private static void resizeButtons(View inputView, int screenWidth, int screenHeight) {
 
         int resize = (int) (screenHeight * Common.AREA_HEIGHT);
         inputView.findViewById(R.id.keyboard_table).getLayoutParams().height = resize;
@@ -409,7 +409,7 @@ public class InputButtons {
      * @param activity ぱらめーた
      * @param direction ぱらめーた
      */
-    private void moveCursor(TokiPonaIME activity, String direction) {
+    private static void moveCursor(TokiPonaIME activity, String direction) {
         InputConnection inputConnection = activity.getCurrentInputConnection();
 
         if (inputConnection != null) {
@@ -501,7 +501,7 @@ public class InputButtons {
      * @param activity ぱらめーた
      * @param inputView ぱらめーた
      */
-    public void initCandidatesView(TokiPonaIME activity, View inputView) {
+    private static void initCandidatesView(TokiPonaIME activity, View inputView) {
         LinearLayout candidateList = inputView.findViewById(R.id.candidate_list);
 
         // 仮の候補リスト
