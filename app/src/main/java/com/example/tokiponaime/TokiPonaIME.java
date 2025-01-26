@@ -16,6 +16,8 @@ import java.util.List;
 
 public class TokiPonaIME extends InputMethodService {
 
+    private LayoutPreferences layoutPreferences;
+
     private View inputViewContainer;
     private View inputView;
     private View inputView_freq;
@@ -27,32 +29,41 @@ public class TokiPonaIME extends InputMethodService {
      */
     @Override
     public View onCreateInputView() {
+
+        // レイアウトの保存先
+        layoutPreferences = new LayoutPreferences(this);
+        int savedLayout = layoutPreferences.getLayoutId(R.layout.keyboard_layouts_container);
+
+        // レイアウトの初期化
         inputViewContainer = getLayoutInflater().inflate(R.layout.keyboard_layouts_container, null);
 
+        // レイアウトの切り替え
         inputView = inputViewContainer.findViewById(R.id.keyboard_layout);
         inputView_freq = inputViewContainer.findViewById(R.id.keyboard_layout_freq);
         inputView_qwerty = inputViewContainer.findViewById(R.id.keyboard_layout_qwerty);
 
+        // レイアウトの切り替え
+        inputView.setVisibility(View.GONE);
         inputView_freq.setVisibility(View.GONE);
         inputView_qwerty.setVisibility(View.GONE);
 
+        // 保存したレイアウトを表示
+        if (savedLayout == R.id.keyboard_layout_freq) {
+            inputView_freq.setVisibility(View.VISIBLE);
+        } else if (savedLayout == R.id.keyboard_layout_qwerty) {
+            inputView_qwerty.setVisibility(View.VISIBLE);
+        } else {
+            inputView.setVisibility(View.VISIBLE);
+        }
+
+        // 画面サイズの取得
         DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
-/*
-        System.out.println("width: " + screenWidth + " height: " + screenHeight);
-        System.out.println("area height: " + (int) (screenHeight * Common.AREA_HEIGHT));
-        System.out.println("grid height(50): " + (int) (screenHeight * Common.GRID_HEIGHT_50));
-        System.out.println("grid height(55): " + (int) (screenHeight * Common.GRID_HEIGHT_55));
-        System.out.println("KEY_WIDTH: " + (int) (screenHeight * Common.KEY_WIDTH));
-        System.out.println("KEY_WIDTH_LR: " + (int) (screenHeight * Common.KEY_WIDTH_LR));
-        System.out.println("KEY_WIDTH_UD: " + (int) (screenHeight * Common.KEY_WIDTH_UD));
-        System.out.println("KEY_WIDTH_BS: " + (int) (screenHeight * Common.KEY_WIDTH_BS));
-        System.out.println("KEY_WIDTH_ENTER: " + (int) (screenHeight * Common.KEY_WIDTH_ENTER));
-        System.out.println("KEY_WIDTH_SPACE: " + (int) (screenHeight * Common.KEY_WIDTH_SPACE));
-*/
+
+        // 入力ボタンの初期化
         InputButtons.initInputButtons(this, inputView, inputView_freq, screenWidth, screenHeight);
         InputButtons.initInputButtons(this, inputView_freq, inputView_qwerty, screenWidth, screenHeight);
         InputButtons.initInputButtons(this, inputView_qwerty, inputView, screenWidth, screenHeight);
@@ -69,6 +80,7 @@ public class TokiPonaIME extends InputMethodService {
     public void onStartInput(EditorInfo attribute, boolean restarting) {
         super.onStartInput(attribute, restarting);
 
+        // 入力候補リストの初期化
         InputConnection inputConnection = getCurrentInputConnection();
         if (inputConnection != null) {
             updateCandidates(Common.getSuggestions(""));
@@ -133,6 +145,7 @@ public class TokiPonaIME extends InputMethodService {
             }
         }
 
+        // 候補が空の時
         if (suggestions.isEmpty()) {
             suggestions = Arrays.asList(Common.tokiPonaMarkers);
         }
@@ -142,12 +155,14 @@ public class TokiPonaIME extends InputMethodService {
             Button button = Common.candidateButton(this, suggestion);
             button.setOnClickListener(v -> {
                 InputConnection inputConnection = getCurrentInputConnection();
+                // カーソルが先頭以外にある時
                 if (inputConnection != null) {
                     CharSequence beforeCursorText = inputConnection.getTextBeforeCursor(0xfffff, 0);
                     CharSequence afterCursorText = inputConnection.getTextAfterCursor(0xfffff, 0);
 
                     int wordLength = 0;
 
+                    // カーソル位置から単語を削除
                     for (int i = beforeCursorText.length() - 1; i >= -1; i--, wordLength++) {
                         if (i == -1 || beforeCursorText.charAt(i) == ' ' || beforeCursorText.charAt(i) == '\n') {
                             break;
@@ -155,6 +170,7 @@ public class TokiPonaIME extends InputMethodService {
                         inputConnection.deleteSurroundingText(1, 0);
                     }
 
+                    // カーソル位置から単語を削除
                     for (int i = 0; i < afterCursorText.length(); i++, wordLength++) {
                         inputConnection.deleteSurroundingText(0, 1);
                         if (i == afterCursorText.length() || afterCursorText.charAt(i) == ' ' || afterCursorText.charAt(i) == '\n') {
@@ -182,6 +198,7 @@ public class TokiPonaIME extends InputMethodService {
         LinearLayout candidateList = inputViewContainer.findViewById(R.id.candidate_list);
         candidateList.removeAllViews();
 
+        // 候補ボタンを追加
         for (String candidate : candidates) {
             Button button = Common.candidateButton(this, candidate);
             button.setOnClickListener(v -> getCurrentInputConnection().commitText(candidate + " ", 1));

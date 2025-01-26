@@ -25,6 +25,9 @@ public class Common {
     public static double MARGIN_2 = GRID_HEIGHT_50 * 2;
     public static double MARGIN_3 = GRID_HEIGHT_50 * 3.1;
 
+    /**
+     * TokiPonaの単語リスト
+     */
     public static final String[] tokiPonaWords = {
             "a", "akesi", "ala", "alasa", "ale", "anpa", "ante", "anu", "apeja", "awen", "e",
             "en", "epiku", "esu", "ijo", "ike", "ilo", "insa", "jaki", "jan", "jasima", "jelo",
@@ -40,6 +43,9 @@ public class Common {
             "tan", "taso", "tawa", "telo", "tenpo", "toki", "tomo", "tonsi", "tu", "unpa", "uta",
             "utala", "walo", "wan", "waso", "wawa", "weka", "wile"
     };
+    /**
+     * TokiPonaの単語リスト
+     */
     public static final String[] tokiPonaMarkers = {
             "e", "li", "pi", "la", "o", "a", "n", "seme", "taso"
     };

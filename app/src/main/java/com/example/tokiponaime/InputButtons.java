@@ -2,6 +2,7 @@ package com.example.tokiponaime;
 
 import android.content.Context;
 import android.os.Handler;
+import android.text.Layout;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.ExtractedTextRequest;
@@ -17,6 +18,8 @@ import java.util.List;
 
 public class InputButtons {
 
+    private static LayoutPreferences layoutPreferences;
+
     /**
      * キーボタンを作成する処理
      *
@@ -25,6 +28,8 @@ public class InputButtons {
      * @param screenWidth
      */
     public static void initInputButtons(TokiPonaIME activity, View inputView, View nextView, int screenWidth, int screenHeight) {
+
+        layoutPreferences = new LayoutPreferences(activity);
 
         resizeButtons(inputView, screenWidth, screenHeight);
 
@@ -63,6 +68,7 @@ public class InputButtons {
         Button btnLeft = inputView.findViewById(R.id.btn_left);
         Button btnRight = inputView.findViewById(R.id.btn_right);
 
+        // ボタンのクリックイベントを設定
         btnA.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("a", 1));
         btnE.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("e", 1));
         btnI.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("i", 1));
@@ -319,6 +325,10 @@ public class InputButtons {
                     activity.updateCandidateList(currentText.toString());
                 }
             }
+
+            // 表示中のレイアウトを保存
+            layoutPreferences.saveLayoutId(nextView.getId());
+
             return true;
         });
         btnQuestion.setOnLongClickListener(v -> {
@@ -332,6 +342,7 @@ public class InputButtons {
      */
     private static void resizeButtons(View inputView, int screenWidth, int screenHeight) {
 
+        // ボタンのサイズ調整
         int resize = (int) (screenHeight * Common.AREA_HEIGHT);
         inputView.findViewById(R.id.keyboard_table).getLayoutParams().height = resize;
 
@@ -416,8 +427,10 @@ public class InputButtons {
             CharSequence beforeCursorText = inputConnection.getTextBeforeCursor(0xfffff, 0);
             CharSequence afterCursorText = inputConnection.getTextAfterCursor(0xfffff, 0);
 
+            // カーソル位置を取得
             int cursorPosition = (beforeCursorText != null ? beforeCursorText.length() : 0);
 
+            // カーソルを移動
             switch (direction) {
                 case "up":
                     // 上方向のカーソル移動
