@@ -174,7 +174,7 @@ public class TokiPonaIME extends InputMethodService {
                     // カーソル位置から単語を削除
                     for (int i = 0; i < afterCursorText.length(); i++, wordLength++) {
                         inputConnection.deleteSurroundingText(0, 1);
-                        if (i == afterCursorText.length() || Common.symbols.indexOf(beforeCursorText.charAt(i)) != -1) {
+                        if (i == afterCursorText.length() || Common.symbols.indexOf(afterCursorText.charAt(i)) != -1) {
                             break;
                         }
                     }

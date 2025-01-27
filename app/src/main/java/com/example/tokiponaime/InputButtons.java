@@ -3,6 +3,7 @@ package com.example.tokiponaime;
 import android.content.Context;
 import android.os.Handler;
 import android.text.Layout;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.ExtractedTextRequest;
@@ -85,8 +86,37 @@ public class InputButtons {
         btnT.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("t", 1));
         btnW.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("w", 1));
 
-        btnEnter.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("\n", 1));
-        btnSpace.setOnClickListener(v -> activity.getCurrentInputConnection().commitText(" ", 1));
+        //btnEnter.setOnClickListener(v -> activity.getCurrentInputConnection().commitText("\n", 1));
+        btnEnter.setOnClickListener(v -> {
+            InputConnection ic = activity.getCurrentInputConnection();
+            if (ic == null) {
+                return;
+            }
+
+            // Enter キーの KeyEvent を作成
+            KeyEvent eventDown = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER);
+            KeyEvent eventUp = new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER);
+
+            // KeyEvent を送信
+            ic.sendKeyEvent(eventDown);
+            ic.sendKeyEvent(eventUp);
+        });
+        //btnSpace.setOnClickListener(v -> activity.getCurrentInputConnection().commitText(" ", 1));
+        btnSpace.setOnClickListener(v -> {
+            InputConnection ic = activity.getCurrentInputConnection();
+            if (ic == null) {
+                return;
+            }
+
+            // Enter キーの KeyEvent を作成
+            KeyEvent eventDown = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL);
+            KeyEvent eventUp = new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL);
+
+            // KeyEvent を送信
+            ic.sendKeyEvent(eventDown);
+            ic.sendKeyEvent(eventUp);
+        });
+
         btnBackSpace.setOnTouchListener(new View.OnTouchListener() {
             final private Handler handler = new Handler();
             private Runnable deleteRunnable;
