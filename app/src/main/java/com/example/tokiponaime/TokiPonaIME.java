@@ -139,7 +139,8 @@ public class TokiPonaIME extends InputMethodService {
         if (!input.isEmpty() && input.charAt(input.length() - 1) != ' ') {
             if (Character.isAlphabetic(input.charAt(input.length() - 1))) {
                 // 新しい候補を取得
-                String[] inputParts = input.split("[ \n]");
+                String[] inputParts = input.split("[ 　\n,.:!?]");
+
                 String last_input = inputParts[inputParts.length - 1];
                 suggestions = Common.getSuggestions(last_input);
             }
@@ -164,7 +165,7 @@ public class TokiPonaIME extends InputMethodService {
 
                     // カーソル位置から単語を削除
                     for (int i = beforeCursorText.length() - 1; i >= -1; i--, wordLength++) {
-                        if (i == -1 || beforeCursorText.charAt(i) == ' ' || beforeCursorText.charAt(i) == '\n') {
+                        if (i == -1 || Common.symbols.indexOf(beforeCursorText.charAt(i)) != -1) {
                             break;
                         }
                         inputConnection.deleteSurroundingText(1, 0);
@@ -173,7 +174,7 @@ public class TokiPonaIME extends InputMethodService {
                     // カーソル位置から単語を削除
                     for (int i = 0; i < afterCursorText.length(); i++, wordLength++) {
                         inputConnection.deleteSurroundingText(0, 1);
-                        if (i == afterCursorText.length() || afterCursorText.charAt(i) == ' ' || afterCursorText.charAt(i) == '\n') {
+                        if (i == afterCursorText.length() || Common.symbols.indexOf(beforeCursorText.charAt(i)) != -1) {
                             break;
                         }
                     }

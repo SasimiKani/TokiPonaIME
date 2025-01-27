@@ -50,6 +50,8 @@ public class Common {
             "e", "li", "pi", "la", "o", "a", "n", "seme", "taso"
     };
 
+    public static final String symbols = " 　\n,.:!?";
+
     /**
      * 入力中の文字列から入力候補を生成して返す処理
      * @param input ぱらめーた
