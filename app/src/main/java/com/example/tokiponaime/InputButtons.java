@@ -101,16 +101,16 @@ public class InputButtons {
             ic.sendKeyEvent(eventDown);
             ic.sendKeyEvent(eventUp);
         });
-        //btnSpace.setOnClickListener(v -> activity.getCurrentInputConnection().commitText(" ", 1));
+
         btnSpace.setOnClickListener(v -> {
             InputConnection ic = activity.getCurrentInputConnection();
             if (ic == null) {
                 return;
             }
 
-            // Enter キーの KeyEvent を作成
-            KeyEvent eventDown = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL);
-            KeyEvent eventUp = new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL);
+            // SPACE キーの KeyEvent を作成
+            KeyEvent eventDown = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SPACE);
+            KeyEvent eventUp = new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_SPACE);
 
             // KeyEvent を送信
             ic.sendKeyEvent(eventDown);
@@ -122,6 +122,17 @@ public class InputButtons {
             private Runnable deleteRunnable;
             // 長押しの判定フラグ
 
+            // DEL キーの削除処理
+            public void sendDelKeyEvent(InputConnection inputConnection) {
+                // DEL キーの KeyEvent を作成
+                KeyEvent eventDown = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL);
+                KeyEvent eventUp = new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL);
+
+                // KeyEvent を送信
+                inputConnection.sendKeyEvent(eventDown);
+                inputConnection.sendKeyEvent(eventUp);
+            }
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 InputConnection inputConnection = activity.getCurrentInputConnection();
@@ -130,7 +141,7 @@ public class InputButtons {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
                             // 最初に1文字を削除
-                            inputConnection.deleteSurroundingText(1, 0);
+                            sendDelKeyEvent(inputConnection);
 
                             // 長押しの処理を開始
                             deleteRunnable = new Runnable() {
@@ -141,7 +152,7 @@ public class InputButtons {
                                     ).text;
 
                                     if (currentText.length() > 0) {
-                                        inputConnection.deleteSurroundingText(1, 0);
+                                        sendDelKeyEvent(inputConnection);
                                     }
                                     handler.postDelayed(this, 60);  // 100msごとに繰り返し削除
                                 }
