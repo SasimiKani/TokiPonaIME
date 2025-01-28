@@ -1,4 +1,4 @@
-package com.example.tokiponaime;
+package com.tokiponaime.tokiponaime;
 
 import android.widget.Button;
 import android.widget.LinearLayout;

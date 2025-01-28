@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.tokiponaime"
+    namespace = "com.tokiponaime.tokiponaime"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.tokiponaime"
+        applicationId = "com.tokiponaime.tokiponaime"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

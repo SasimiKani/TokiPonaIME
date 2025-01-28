@@ -1,4 +1,4 @@
-package com.example.tokiponaime.ui.theme
+package com.tokiponaime.tokiponaime.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

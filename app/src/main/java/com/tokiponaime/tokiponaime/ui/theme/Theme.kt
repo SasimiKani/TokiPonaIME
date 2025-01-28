@@ -1,6 +1,5 @@
-package com.example.tokiponaime.ui.theme
+package com.tokiponaime.tokiponaime.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.example.tokiponaime",
+  "applicationId": "com.tokiponaime.tokiponaime",
   "variantName": "release",
   "elements": [
     {

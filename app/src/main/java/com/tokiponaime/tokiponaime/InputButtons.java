@@ -1,8 +1,7 @@
-package com.example.tokiponaime;
+package com.tokiponaime.tokiponaime;
 
 import android.content.Context;
 import android.os.Handler;
-import android.text.Layout;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
 
 import java.util.Arrays;
