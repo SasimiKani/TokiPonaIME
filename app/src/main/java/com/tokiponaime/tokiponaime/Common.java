@@ -25,6 +25,8 @@ public class Common {
     public static double MARGIN_2 = GRID_HEIGHT_50 * 2;
     public static double MARGIN_3 = GRID_HEIGHT_50 * 3.1;
 
+    public static float fontSize = 14f;
+
     /**
      * TokiPonaの単語リスト
      */

@@ -381,6 +381,36 @@ public class InputButtons {
      */
     private static void resizeButtons(View inputView, int screenWidth, int screenHeight) {
 
+        // フォントサイズ調整
+        ((Button)inputView.findViewById(R.id.btn_a)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_e)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_i)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_o)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_u)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_j)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_k)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_l)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_m)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_n)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_p)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_s)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_t)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_w)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_enter)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_space)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_back_space)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_period)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_comma)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_coron)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_exclamation)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_question)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_up)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_down)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_left)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_right)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_left)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_right)).setTextSize(Common.fontSize);
+
         // ボタンのサイズ調整
         int resize = (int) (screenHeight * Common.AREA_HEIGHT);
         inputView.findViewById(R.id.keyboard_table).getLayoutParams().height = resize;
@@ -388,6 +418,8 @@ public class InputButtons {
         resize = (int) (screenHeight * Common.GRID_HEIGHT_50); // 50dp
         inputView.findViewById(R.id.grid_layout_4).getLayoutParams().height = resize;
         inputView.findViewById(R.id.candidate_list).getLayoutParams().height = resize;
+        // inputView.findViewById(R.id.scroll_view).getLayoutParams().width = screenWidth/2;
+        // inputView.findViewById(R.id.candidate_list).getLayoutParams().width = screenWidth/2;
 
         resize = (int) (screenHeight * Common.GRID_HEIGHT_55); // 55dp
         inputView.findViewById(R.id.grid_layout_1).getLayoutParams().height = resize;
@@ -562,6 +594,7 @@ public class InputButtons {
         // 候補を追加
         for (String candidate : candidates) {
             Button button = Common.candidateButton(activity, candidate);
+            button.setTextSize(Common.fontSize);
             button.setOnClickListener(v -> {
                 // 候補が選択されたときの処理
                 activity.getCurrentInputConnection().commitText(candidate, 1);

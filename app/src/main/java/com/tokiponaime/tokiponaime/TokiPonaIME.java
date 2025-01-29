@@ -63,6 +63,9 @@ public class TokiPonaIME extends InputMethodService {
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
 
+        // フォントサイズの調整
+        Common.fontSize = 14f * 892 / screenHeight;
+
         // 入力ボタンの初期化
         InputButtons.initInputButtons(this, inputView, inputView_freq, screenWidth, screenHeight);
         InputButtons.initInputButtons(this, inputView_freq, inputView_qwerty, screenWidth, screenHeight);
@@ -154,6 +157,7 @@ public class TokiPonaIME extends InputMethodService {
         // 候補ボタンを追加
         for (String suggestion : suggestions) {
             Button button = Common.candidateButton(this, suggestion);
+            button.setTextSize(Common.fontSize);
             button.setOnClickListener(v -> {
                 InputConnection inputConnection = getCurrentInputConnection();
                 // カーソルが先頭以外にある時
@@ -202,6 +206,7 @@ public class TokiPonaIME extends InputMethodService {
         // 候補ボタンを追加
         for (String candidate : candidates) {
             Button button = Common.candidateButton(this, candidate);
+            button.setTextSize(Common.fontSize);
             button.setOnClickListener(v -> getCurrentInputConnection().commitText(candidate + " ", 1));
             candidateList.addView(button);
         }
