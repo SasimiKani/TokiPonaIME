@@ -1,5 +1,13 @@
 # 最新情報
-**バグ取り完了**
+**GooglePlayで内部テスト中**
+- Androidユーザー
+- 協力してくれる人
+テスターやってくれる人いたら連絡ください
+---
+コンタクト↓
+X(Twitter)：[@IshikariTeshio](https://x.com/IshikariTeshio)
+メール：kanisasi84@gmail.com
+---
 
 # TokiPonaIME
 ## トキポナ特化仮想キーボード
@@ -13,8 +21,6 @@
 	- 出現頻度順配列
 	- QWERTYライク配列
 ## アプリケーションソフトウェア情報
-| バージョン | 0.0β |
-|--|--|
-|更新日|2025/01/26 |
-|OSの要件|Android 12 以上 |
-|提供元|[@IshikariTeshio](https://x.com/IshikariTeshio) |
+| バージョン | 1.0|
+|-|-|
+| 提供元   | [@IshikariTeshio](https://x.com/IshikariTeshio) |
