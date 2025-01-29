@@ -4,9 +4,11 @@
 - 協力してくれる人
 テスターやってくれる人いたら連絡ください
 ---
-コンタクト↓
-X(Twitter)：[@IshikariTeshio](https://x.com/IshikariTeshio)
-メール：kanisasi84@gmail.com
+  
+コンタクト↓  
+X(Twitter)：[@IshikariTeshio](https://x.com/IshikariTeshio)  
+メール：kanisasi84@gmail.com  
+
 ---
 
 # TokiPonaIME
