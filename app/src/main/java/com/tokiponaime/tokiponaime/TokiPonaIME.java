@@ -62,9 +62,14 @@ public class TokiPonaIME extends InputMethodService {
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
+        float density = getResources().getDisplayMetrics().density;
 
         // フォントサイズの調整
-        Common.fontSize = 14f * 892 / screenHeight;
+        if (2118 / screenHeight < 1080 / screenWidth) {
+            Common.fontSize = 15f * screenWidth / density / 1080f * 2.625f;
+        } else {
+            Common.fontSize = 15f * screenHeight / density / 2118f * 2.625f;
+        }
 
         // 入力ボタンの初期化
         InputButtons.initInputButtons(this, inputView, inputView_freq, screenWidth, screenHeight);

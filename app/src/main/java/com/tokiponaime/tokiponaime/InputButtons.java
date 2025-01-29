@@ -418,8 +418,6 @@ public class InputButtons {
         resize = (int) (screenHeight * Common.GRID_HEIGHT_50); // 50dp
         inputView.findViewById(R.id.grid_layout_4).getLayoutParams().height = resize;
         inputView.findViewById(R.id.candidate_list).getLayoutParams().height = resize;
-        // inputView.findViewById(R.id.scroll_view).getLayoutParams().width = screenWidth/2;
-        // inputView.findViewById(R.id.candidate_list).getLayoutParams().width = screenWidth/2;
 
         resize = (int) (screenHeight * Common.GRID_HEIGHT_55); // 55dp
         inputView.findViewById(R.id.grid_layout_1).getLayoutParams().height = resize;

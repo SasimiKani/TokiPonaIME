@@ -83,7 +83,7 @@ public class Common {
         Button button = new Button(activity);
         button.setText(candidate);
         button.setLayoutParams(new LinearLayout.LayoutParams(
-                dpToPx(activity, 38 + candidate.length()*7),
+                dpToPx(activity, 40 + candidate.length()*10),
                 LinearLayout.LayoutParams.WRAP_CONTENT
         ));
         return button;
