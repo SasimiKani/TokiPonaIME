@@ -30,7 +30,11 @@ public class InputButtons {
 
         layoutPreferences = new LayoutPreferences(activity);
 
-        resizeButtons(inputView, screenWidth, screenHeight);
+        if (screenWidth < screenHeight) {
+            resizeButtons(inputView, screenWidth, screenHeight, Common.SCREEN_ROTATE_V);
+        } else {
+            resizeButtons(nextView, screenHeight, screenWidth, Common.SCREEN_ROTATE_H);
+        }
 
         initCandidatesView(activity, inputView);
 
@@ -379,7 +383,7 @@ public class InputButtons {
     /**
      * サイズ調整
      */
-    private static void resizeButtons(View inputView, int screenWidth, int screenHeight) {
+    private static void resizeButtons(View inputView, int screenWidth, int screenHeight, boolean screenRotate) {
 
         // フォントサイズ調整
         ((Button)inputView.findViewById(R.id.btn_a)).setTextSize(Common.fontSize);
@@ -398,7 +402,7 @@ public class InputButtons {
         ((Button)inputView.findViewById(R.id.btn_w)).setTextSize(Common.fontSize);
         ((Button)inputView.findViewById(R.id.btn_enter)).setTextSize(Common.fontSize);
         ((Button)inputView.findViewById(R.id.btn_space)).setTextSize(Common.fontSize);
-        ((Button)inputView.findViewById(R.id.btn_back_space)).setTextSize(Common.fontSize);
+        ((Button)inputView.findViewById(R.id.btn_back_space)).setTextSize(Common.fontSize * 0.8f);
         ((Button)inputView.findViewById(R.id.btn_period)).setTextSize(Common.fontSize);
         ((Button)inputView.findViewById(R.id.btn_comma)).setTextSize(Common.fontSize);
         ((Button)inputView.findViewById(R.id.btn_coron)).setTextSize(Common.fontSize);
@@ -415,6 +419,11 @@ public class InputButtons {
         int resize = (int) (screenHeight * Common.AREA_HEIGHT);
         inputView.findViewById(R.id.keyboard_table).getLayoutParams().height = resize;
 
+        if (screenRotate == Common.SCREEN_ROTATE_H) { // 横画面のとき
+            resize = (int) (screenHeight * Common.AREA_WIDTH);
+            inputView.findViewById(R.id.keyboard_table).getLayoutParams().width = resize;
+        }
+
         resize = (int) (screenHeight * Common.GRID_HEIGHT_50); // 50dp
         inputView.findViewById(R.id.grid_layout_4).getLayoutParams().height = resize;
         inputView.findViewById(R.id.candidate_list).getLayoutParams().height = resize;
@@ -423,6 +432,11 @@ public class InputButtons {
         inputView.findViewById(R.id.grid_layout_1).getLayoutParams().height = resize;
         inputView.findViewById(R.id.grid_layout_2).getLayoutParams().height = resize;
         inputView.findViewById(R.id.grid_layout_3).getLayoutParams().height = resize;
+
+        int  tmpScreenWidth = screenWidth;
+        if (screenRotate == Common.SCREEN_ROTATE_H) { // 横画面のとき
+            screenWidth = screenHeight;
+        }
 
         resize = (int) (screenWidth * Common.KEY_WIDTH);
         inputView.findViewById(R.id.btn_e).getLayoutParams().width = resize;
@@ -476,6 +490,7 @@ public class InputButtons {
 
         params = (FrameLayout.LayoutParams) inputView.findViewById(R.id.grid_layout_3).getLayoutParams();
         params.topMargin = (int) (screenHeight * Common.MARGIN_2);
+        params.width = (int) (screenWidth * Common.AREA_WIDTH);
         inputView.findViewById(R.id.grid_layout_3).setLayoutParams(params);
 
         params = (FrameLayout.LayoutParams) inputView.findViewById(R.id.grid_layout_4).getLayoutParams();

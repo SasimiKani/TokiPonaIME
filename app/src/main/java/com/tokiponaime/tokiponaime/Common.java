@@ -8,7 +8,12 @@ import java.util.List;
 
 public class Common {
 
+    // 画面回転
+    public static boolean SCREEN_ROTATE_V = false;
+    public static boolean SCREEN_ROTATE_H = true;
+
     public static double AREA_HEIGHT = 0.32;
+    public static double AREA_WIDTH = 1.00;
     public static double GRID_HEIGHT_50 = AREA_HEIGHT * 0.187;
     public static double GRID_HEIGHT_55 = GRID_HEIGHT_50 * 1.1;
     public static double KEY_WIDTH = 0.146;
