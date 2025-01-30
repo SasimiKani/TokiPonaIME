@@ -169,6 +169,15 @@ public class TokiPonaIME extends InputMethodService {
             button.setTextSize(Common.fontSize);
             button.setOnClickListener(v -> {
                 InputConnection inputConnection = getCurrentInputConnection();
+
+                // 選択中の文字列が存在するとき
+                CharSequence selectedText = inputConnection.getSelectedText(0);
+                if (selectedText != null &&  selectedText.length() > 0) {
+                    // それを削除してコネクションを取り直し
+                    inputConnection.deleteSurroundingText(1, 0);
+                    inputConnection = getCurrentInputConnection(); // コネクション取り直し
+                }
+
                 // カーソルが先頭以外にある時
                 if (inputConnection != null) {
                     CharSequence beforeCursorText = inputConnection.getTextBeforeCursor(0xfffff, 0);
