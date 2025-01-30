@@ -552,11 +552,9 @@ public class InputButtons {
                     if (afterCursorText != null) {
                         int k = 0;
                         for (int i = beforeCursorText.length() - 1; i > -1 && beforeCursorText.charAt(i) != '\n'; i--, k++);
-                        System.out.println(k);
+
                         for (int i = 0; i < afterCursorText.length(); i++) {
                             if (afterCursorText.charAt(i) == '\n') {
-                                System.out.println(i);
-                                System.out.println(cursorPosition);
                                 int l = 0;
                                 for (int j = i + 1; j < afterCursorText.length() && afterCursorText.charAt(j) != '\n'; j++, l++);
                                 if (l < k) {
@@ -568,7 +566,6 @@ public class InputButtons {
                             }
                         }
                     }
-                    System.out.println(nextLineStart);
 
                     // カーソル位置を更新
                     if (nextLineStart != -1) {

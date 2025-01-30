@@ -2,6 +2,7 @@ package com.tokiponaime.tokiponaime;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -170,6 +171,11 @@ public class TokiPonaIME extends InputMethodService {
             button.setOnClickListener(v -> {
                 InputConnection inputConnection = getCurrentInputConnection();
 
+                // カーソル位置を取得して補完を排除
+                int cursorPosition = (inputConnection.getTextBeforeCursor(0xfffff, 0).length());
+                inputConnection.setSelection(cursorPosition - 1, cursorPosition - 1);
+                inputConnection.setSelection(cursorPosition, cursorPosition);
+
                 // 選択中の文字列が存在するとき
                 CharSequence selectedText = inputConnection.getSelectedText(0);
                 if (selectedText != null &&  selectedText.length() > 0) {
@@ -202,7 +208,17 @@ public class TokiPonaIME extends InputMethodService {
                     }
 
                     // 候補が選択されたときに入力を確定
-                    inputConnection.commitText(suggestion + " ", 1);
+                    inputConnection.commitText(suggestion, 1);
+
+                    // スペースを入れる
+                    // SPACE キーの KeyEvent を作成
+                    KeyEvent eventDown = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SPACE);
+                    KeyEvent eventUp = new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_SPACE);
+
+                    // KeyEvent を送信
+                    inputConnection.sendKeyEvent(eventDown);
+                    inputConnection.sendKeyEvent(eventUp);
+
                     updateCandidates(Arrays.asList(Common.tokiPonaMarkers));
                 }
             });
