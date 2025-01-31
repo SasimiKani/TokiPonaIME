@@ -112,15 +112,7 @@ public class TokiPonaIME extends InputMethodService {
     @Override
     public void onUpdateSelection(int oldSelStart, int oldSelEnd, int newSelStart, int newSelEnd, int candidatesStart, int candidatesEnd) {
         super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd);
-
-        InputConnection inputConnection = getCurrentInputConnection();
-
-        if (inputConnection != null) {
-            CharSequence currentText = inputConnection.getTextBeforeCursor(0xfffff, 0);
-            if (currentText != null) {
-                updateCandidateList(currentText.toString());
-            }
-        }
+        updateCandidateList();
     }
 
     /**
@@ -138,91 +130,121 @@ public class TokiPonaIME extends InputMethodService {
 
     /**
      * 入力候補リストを更新する処理
-     * @param input ぱらめーた
      */
-    public void updateCandidateList(String input) {
-        View visibleLayout = getVisibleLayout((FrameLayout) inputViewContainer);
+    public void updateCandidateList() {
 
-        // 候補リストの親ビューをクリア
-        LinearLayout candidateList = visibleLayout.findViewById(R.id.candidate_list);
-        candidateList.removeAllViews();
+        InputConnection inputConnection = getCurrentInputConnection();
 
-        List<String> suggestions = Common.getSuggestions("");
-        // カーソルが先頭以外にある時
-        if (!input.isEmpty() && input.charAt(input.length() - 1) != ' ') {
-            if (Character.isAlphabetic(input.charAt(input.length() - 1))) {
-                // 新しい候補を取得
-                String[] inputParts = input.split("[ 　\n,.:!?]");
+        if (inputConnection != null) {
+            CharSequence beforeCursor = inputConnection.getTextBeforeCursor(0xfffff, 0);
+            CharSequence afterCursor = inputConnection.getTextAfterCursor(0xfffff, 0);
+            if (beforeCursor != null || afterCursor != null) {
+                String input1 = beforeCursor.toString();
+                String input2 = afterCursor.toString();
 
-                String last_input = inputParts[inputParts.length - 1];
-                suggestions = Common.getSuggestions(last_input);
-            }
-        }
+                View visibleLayout = getVisibleLayout((FrameLayout) inputViewContainer);
 
-        // 候補が空の時
-        if (suggestions.isEmpty()) {
-            suggestions = Arrays.asList(Common.tokiPonaMarkers);
-        }
+                // 候補リストの親ビューをクリア
+                LinearLayout candidateList = visibleLayout.findViewById(R.id.candidate_list);
+                candidateList.removeAllViews();
 
-        // 候補ボタンを追加
-        for (String suggestion : suggestions) {
-            Button button = Common.candidateButton(this, suggestion);
-            button.setTextSize(Common.fontSize);
-            button.setOnClickListener(v -> {
-                InputConnection inputConnection = getCurrentInputConnection();
-
-                // カーソル位置を取得して補完を排除
-                int cursorPosition = (inputConnection.getTextBeforeCursor(0xfffff, 0).length());
-                inputConnection.setSelection(cursorPosition - 1, cursorPosition - 1);
-                inputConnection.setSelection(cursorPosition, cursorPosition);
-
-                // 選択中の文字列が存在するとき
-                CharSequence selectedText = inputConnection.getSelectedText(0);
-                if (selectedText != null &&  selectedText.length() > 0) {
-                    // それを削除してコネクションを取り直し
-                    inputConnection.deleteSurroundingText(1, 0);
-                    inputConnection = getCurrentInputConnection(); // コネクション取り直し
-                }
-
+                List<String> suggestions = Common.getSuggestions("");
                 // カーソルが先頭以外にある時
-                if (inputConnection != null) {
-                    CharSequence beforeCursorText = inputConnection.getTextBeforeCursor(0xfffff, 0);
-                    CharSequence afterCursorText = inputConnection.getTextAfterCursor(0xfffff, 0);
+                if (!input1.isEmpty() && input1.charAt(input1.length() - 1) != ' ') {
+                    if (Character.isAlphabetic(input1.charAt(input1.length() - 1))) {
+                        // 新しい候補を取得
+                        String currentWord = "";
 
-                    int wordLength = 0;
-
-                    // カーソル位置から単語を削除
-                    for (int i = beforeCursorText.length() - 1; i >= -1; i--, wordLength++) {
-                        if (i == -1 || Common.symbols.indexOf(beforeCursorText.charAt(i)) != -1) {
-                            break;
+                        for (int i = input1.length() - 1; i >= -1; i--) {
+                            if (i == -1 || Common.symbols.indexOf(input1.charAt(i)) != -1) {
+                                currentWord += input1.substring(i + 1);
+                                break;
+                            }
                         }
-                        inputConnection.deleteSurroundingText(1, 0);
-                    }
 
-                    // カーソル位置から単語を削除
-                    for (int i = 0; i < afterCursorText.length(); i++, wordLength++) {
-                        inputConnection.deleteSurroundingText(0, 1);
-                        if (i == afterCursorText.length() || Common.symbols.indexOf(afterCursorText.charAt(i)) != -1) {
-                            break;
+                        for (int i = 0; i < input2.length(); i++) {
+                            if (i == input2.length() || Common.symbols.indexOf(input2.charAt(i)) != -1) {
+                                currentWord += input2.substring(0, i);
+                                break;
+                            }
                         }
+
+                        suggestions = Common.getSuggestions(currentWord);
                     }
-
-                    // 候補が選択されたときに入力を確定
-                    inputConnection.commitText(suggestion, 1);
-
-                    // スペースを入れる
-                    // SPACE キーの KeyEvent を作成
-                    KeyEvent eventDown = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SPACE);
-                    KeyEvent eventUp = new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_SPACE);
-
-                    // KeyEvent を送信
-                    inputConnection.sendKeyEvent(eventDown);
-                    inputConnection.sendKeyEvent(eventUp);
-
-                    updateCandidates(Arrays.asList(Common.tokiPonaMarkers));
                 }
-            });
-            candidateList.addView(button);
+
+                // 候補が空の時＆直前・直後にアルファベットがないとき
+                if (suggestions.isEmpty() && (input1.length() == 0 || Common.symbols.indexOf(input1.charAt(input1.length() - 1)) != -1) && (input2.length() == 0 || Common.symbols.indexOf(input2.charAt(0)) != -1)) {
+                    suggestions = Arrays.asList(Common.tokiPonaMarkers);
+                }
+
+                // 候補ボタンを追加
+                for (String suggestion : suggestions) {
+                    Button button = Common.candidateButton(this, suggestion);
+                    button.setTextSize(Common.fontSize);
+                    button.setOnClickListener(v -> {
+                        InputConnection ic = getCurrentInputConnection();
+
+                        // カーソル位置を取得して補完を排除
+                        int cursorPosition = (ic.getTextBeforeCursor(0xfffff, 0).length());
+                        ic.setSelection(cursorPosition - 1, cursorPosition - 1);
+                        ic.setSelection(cursorPosition, cursorPosition);
+
+                        // 選択中の文字列が存在するとき
+                        CharSequence selectedText = ic.getSelectedText(0);
+                        if (selectedText != null &&  selectedText.length() > 0) {
+                            // それを削除してコネクションを取り直し
+                            ic.deleteSurroundingText(1, 0);
+                            ic = getCurrentInputConnection(); // コネクション取り直し
+                        }
+
+                        // カーソルが先頭以外にある時
+                        if (ic != null) {
+                            CharSequence beforeCursorText = ic.getTextBeforeCursor(0xfffff, 0);
+                            CharSequence afterCursorText = ic.getTextAfterCursor(0xfffff, 0);
+
+                            int wordLength = 0;
+
+                            // カーソル位置から単語を削除
+                            for (int i = beforeCursorText.length() - 1; i >= -1; i--, wordLength++) {
+                                if (i == -1 || Common.symbols.indexOf(beforeCursorText.charAt(i)) != -1) {
+                                    break;
+                                }
+                                ic.deleteSurroundingText(1, 0);
+                            }
+
+                            // カーソル位置から単語を削除
+                            for (int i = 0; i < afterCursorText.length(); i++, wordLength++) {
+                                if (i == afterCursorText.length() || Common.symbols.indexOf(afterCursorText.charAt(i)) != -1) {
+                                    break;
+                                }
+                                ic.deleteSurroundingText(0, 1);
+                            }
+
+                            // 候補が選択されたときに入力を確定
+                            ic.commitText(suggestion, 1);
+
+                            // スペースがなかったらスペースを入れる
+                            if ((ic.getTextAfterCursor(0xfffff, 0).length() == 0 || ic.getTextAfterCursor(0xfffff, 0).charAt(0) != ' ')) {
+                                // SPACE キーの KeyEvent を作成
+                                KeyEvent eventDown = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SPACE);
+                                KeyEvent eventUp = new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_SPACE);
+
+                                // KeyEvent を送信
+                                ic.sendKeyEvent(eventDown);
+                                ic.sendKeyEvent(eventUp);
+                            } else {
+                                // スペースの後にカーソル移動
+                                cursorPosition = (ic.getTextBeforeCursor(0xfffff, 0).length());
+                                ic.setSelection(cursorPosition + 1, cursorPosition + 1);
+                            }
+
+                            updateCandidates(Arrays.asList(Common.tokiPonaMarkers));
+                        }
+                    });
+                    candidateList.addView(button);
+                }
+            }
         }
     }
 

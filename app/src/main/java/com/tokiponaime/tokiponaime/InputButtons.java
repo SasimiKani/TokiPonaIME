@@ -24,7 +24,7 @@ public class InputButtons {
      *
      * @param activity    ぱらめーた
      * @param inputView   ぱらめーた
-     * @param screenWidth
+     * @param screenWidth   ぱらめーた
      */
     public static void initInputButtons(TokiPonaIME activity, View inputView, View nextView, int screenWidth, int screenHeight) {
 
@@ -360,14 +360,7 @@ public class InputButtons {
             inputView.setVisibility(View.GONE);
 
             // 候補リストを更新
-            InputConnection inputConnection = activity.getCurrentInputConnection();
-
-            if (inputConnection != null) {
-                CharSequence currentText = inputConnection.getTextBeforeCursor(0xfffff, 0);
-                if (currentText != null) {
-                    activity.updateCandidateList(currentText.toString());
-                }
-            }
+            activity.updateCandidateList();
 
             // 表示中のレイアウトを保存
             layoutPreferences.saveLayoutId(nextView.getId());
