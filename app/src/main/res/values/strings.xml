@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">TokiPonaIME</string>
     <string name="keyboard_name">Toki Pona Keyboard</string>
+
+    <string name="ref_page_00">Tap "System".</string>
+    <string name="ref_page_01">Tap "Keyboard".</string>
+    <string name="ref_page_02">Tap "On-screen Keyboard".</string>
+    <string name="ref_page_03">Turn on "TokiPonaIME".</string>
+    <string name="ref_page_04">Setup is complete.</string>
+    <string name="ref_page_404">Unknown Page</string>
 </resources>
