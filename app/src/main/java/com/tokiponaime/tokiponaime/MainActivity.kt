@@ -42,12 +42,12 @@ class MainActivity : ComponentActivity() {
     companion object {
         const val MAX_PAGE = 5
 
-        const val ref_page_00 = "Tap \"System\"."
-        const val ref_page_01 = "Tap \"Keyboard\"."
-        const val ref_page_02 = "Tap \"On-screen Keyboard\"."
-        const val ref_page_03 = "Turn on \"TokiPonaIME\"."
-        const val ref_page_04 = "Setup is complete."
-        const val ref_page_404 = "Unknown Page"
+        const val REF_PAGE_00 = "Tap \"System\"."
+        const val REF_PAGE_01 = "Tap \"Keyboard\"."
+        const val REF_PAGE_02 = "Tap \"On-screen Keyboard\"."
+        const val REF_PAGE_03 = "Turn on \"TokiPonaIME\"."
+        const val REF_PAGE_04 = "Setup is complete."
+        const val REF_PAGE_404 = "Unknown Page"
     }
 
     @OptIn(ExperimentalFoundationApi::class)
@@ -123,12 +123,12 @@ fun PageContent(page: Int, navController: NavController, pagerState: PagerState,
         )
         Text(
             text = when (page) {
-                0 -> MainActivity.ref_page_00
-                1 -> MainActivity.ref_page_01
-                2 -> MainActivity.ref_page_02
-                3 -> MainActivity.ref_page_03
-                4 -> MainActivity.ref_page_04
-                else -> MainActivity.ref_page_404
+                0 -> MainActivity.REF_PAGE_00
+                1 -> MainActivity.REF_PAGE_01
+                2 -> MainActivity.REF_PAGE_02
+                3 -> MainActivity.REF_PAGE_03
+                4 -> MainActivity.REF_PAGE_04
+                else -> MainActivity.REF_PAGE_404
             },
             modifier = Modifier.padding(16.dp),
             textAlign = TextAlign.Center
