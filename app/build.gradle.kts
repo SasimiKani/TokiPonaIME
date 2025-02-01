@@ -54,6 +54,14 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
 
+    val nav_version = "2.8.6"
+    // Navigation Compose の依存関係を追加
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+    // Navigation Fragment の依存関係を追加
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    // Navigation UI の依存関係を追加
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
