@@ -1,5 +1,5 @@
 # 最新情報
-**GooglePlayで内部テスト中**
+**GooglePlayでクローズド中**
 
 現在内部テスター11名が協力してくれてます！  
 あと9名必要です  
@@ -11,7 +11,7 @@
   
 コンタクト↓  
 X(Twitter)：[@IshikariTeshio](https://x.com/IshikariTeshio)  
-メール：kanisasi84@gmail.com  
+メール：kyu9iro@gmail.com  
 
 ---
 
@@ -35,6 +35,6 @@ X(Twitter)：[@IshikariTeshio](https://x.com/IshikariTeshio)
 5. キーボードを切り替える  
 
 ## アプリケーションソフトウェア情報
-| バージョン | 1.0|
-|-|-|
+| バージョン | 1.0.4β                                          |
+|-------|-------------------------------------------------|
 | 提供元   | [@IshikariTeshio](https://x.com/IshikariTeshio) |
