@@ -17,12 +17,15 @@ import java.util.List;
 
 public class TokiPonaIME extends InputMethodService {
 
+    public EditorInfo mEditorInfo;
+
     private LayoutPreferences layoutPreferences;
 
     private View inputViewContainer;
     private View inputView;
     private View inputView_freq;
     private View inputView_qwerty;
+    private boolean restarting;
 
     /**
      * キーボードが作られる処理
@@ -92,6 +95,8 @@ public class TokiPonaIME extends InputMethodService {
     @Override
     public void onStartInput(EditorInfo attribute, boolean restarting) {
         super.onStartInput(attribute, restarting);
+
+        mEditorInfo = attribute;
 
         // 入力候補リストの初期化
         InputConnection inputConnection = getCurrentInputConnection();

@@ -2,9 +2,11 @@ package com.tokiponaime.tokiponaime;
 
 import android.content.Context;
 import android.os.Handler;
+import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.ExtractedTextRequest;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
@@ -95,13 +97,23 @@ public class InputButtons {
                 return;
             }
 
-            // Enter キーの KeyEvent を作成
-            KeyEvent eventDown = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER);
-            KeyEvent eventUp = new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER);
+            // 複数行入力可能かどうかを判定する
+            // ※ TYPE_TEXT_FLAG_MULTI_LINE が立っているか、または IME_FLAG_NO_ENTER_ACTION が指定されている場合は改行扱いとする
+            boolean isMultiLine = ((activity.mEditorInfo.inputType & InputType.TYPE_TEXT_FLAG_MULTI_LINE) != 0) ||
+                    ((activity.mEditorInfo.imeOptions & EditorInfo.IME_FLAG_NO_ENTER_ACTION) != 0);
 
-            // KeyEvent を送信
-            ic.sendKeyEvent(eventDown);
-            ic.sendKeyEvent(eventUp);
+            if (isMultiLine) {
+                // 改行文字を直接入力する
+                ic.commitText("\n", 1);
+            } else {
+                // Enter キーの KeyEvent を作成
+                KeyEvent eventDown = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER);
+                KeyEvent eventUp = new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER);
+
+                // KeyEvent を送信
+                ic.sendKeyEvent(eventDown);
+                ic.sendKeyEvent(eventUp);
+            }
         });
 
         btnSpace.setOnClickListener(v -> {
