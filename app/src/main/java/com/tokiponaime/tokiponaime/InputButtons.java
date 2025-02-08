@@ -130,17 +130,6 @@ public class InputButtons {
             private Runnable deleteRunnable;
             // 長押しの判定フラグ
 
-            // DEL キーの削除処理
-            public void sendDelKeyEvent(InputConnection inputConnection) {
-                // DEL キーの KeyEvent を作成
-                KeyEvent eventDown = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL);
-                KeyEvent eventUp = new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL);
-
-                // KeyEvent を送信
-                inputConnection.sendKeyEvent(eventDown);
-                inputConnection.sendKeyEvent(eventUp);
-            }
-
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 InputConnection inputConnection = activity.getCurrentInputConnection();
@@ -149,7 +138,7 @@ public class InputButtons {
                     switch (event.getAction()) {
                         case MotionEvent.ACTION_DOWN:
                             // 最初に1文字を削除
-                            sendDelKeyEvent(inputConnection);
+                            deleteEvent(inputConnection);
 
                             // 長押しの処理を開始
                             deleteRunnable = new Runnable() {
@@ -160,7 +149,7 @@ public class InputButtons {
                                     ).text;
 
                                     if (currentText.length() > 0) {
-                                        sendDelKeyEvent(inputConnection);
+                                        deleteEvent(inputConnection);
                                     }
                                     handler.postDelayed(this, 60);  // 100msごとに繰り返し削除
                                 }
@@ -496,6 +485,18 @@ public class InputButtons {
         params.topMargin = (int) (screenHeight * Common.MARGIN_3);
         inputView.findViewById(R.id.grid_layout_4).setLayoutParams(params);
 
+    }
+
+    public static void deleteEvent(InputConnection ic) {
+        // 選択されているテキストを取得
+        CharSequence selectedText = ic.getSelectedText(0);
+        if (selectedText != null && selectedText.length() > 0) {
+            // 範囲選択が存在する場合は、選択範囲を空文字に置き換えて削除
+            ic.commitText("", 1);
+        } else {
+            // 選択がない場合は、カーソルの直前の1文字を削除
+            ic.deleteSurroundingText(1, 0);
+        }
     }
 
     /**

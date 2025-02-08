@@ -11,8 +11,8 @@ android {
         applicationId = "com.tokiponaime.tokiponaime"
         minSdk = 24
         targetSdk = 34
-        versionCode = 8
-        versionName = "1.0.6β"
+        versionCode = 9
+        versionName = "1.0.7β"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
