@@ -598,6 +598,7 @@ public class InputButtons {
         for (String candidate : candidates) {
             Button button = Common.candidateButton(activity, candidate);
             button.setTextSize(Common.fontSize);
+            button.setAllCaps(false);
             button.setOnClickListener(v -> {
                 // 候補が選択されたときの処理
                 activity.getCurrentInputConnection().commitText(candidate, 1);

@@ -182,6 +182,7 @@ public class TokiPonaIME extends InputMethodService {
                 for (String suggestion : suggestions) {
                     Button button = Common.candidateButton(this, suggestion);
                     button.setTextSize(Common.fontSize);
+                    button.setAllCaps(false);
                     button.setOnClickListener(v -> {
                         InputConnection ic = getCurrentInputConnection();
 
@@ -263,6 +264,7 @@ public class TokiPonaIME extends InputMethodService {
         for (String candidate : candidates) {
             Button button = Common.candidateButton(this, candidate);
             button.setTextSize(Common.fontSize);
+            button.setAllCaps(false);
             button.setOnClickListener(v -> getCurrentInputConnection().commitText(candidate + " ", 1));
             candidateList.addView(button);
         }

@@ -49,43 +49,51 @@
                         android:id="@+id/btn_a"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
-                        android:text="a" />
+                        android:text="a"
+                        android:textAllCaps="false"/>
                     <Button
                         android:id="@+id/btn_e"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
-                        android:text="e" />
+                        android:text="e"
+                        android:textAllCaps="false"/>
                     <Button
                         android:id="@+id/btn_i"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
-                        android:text="i" />
+                        android:text="i"
+                        android:textAllCaps="false"/>
                     <Button
                         android:id="@+id/btn_o"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
-                        android:text="o" />
+                        android:text="o"
+                        android:textAllCaps="false"/>
                     <Button
                         android:id="@+id/btn_u"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
-                        android:text="u" />
+                        android:text="u"
+                        android:textAllCaps="false"/>
 
                     <Button
                         android:id="@+id/btn_left"
                         android:layout_width="35dp"
                         android:layout_height="match_parent"
-                        android:text="←" />
+                        android:text="←"
+                        android:textAllCaps="false"/>
                     <Button
                         android:id="@+id/btn_down"
                         android:layout_width="40dp"
                         android:layout_height="match_parent"
-                        android:text="↓" />
+                        android:text="↓"
+                        android:textAllCaps="false"/>
                     <Button
                         android:id="@+id/btn_right"
                         android:layout_width="35dp"
                         android:layout_height="match_parent"
-                        android:text="→" />
+                        android:text="→"
+                        android:textAllCaps="false"/>
                 </GridLayout>
 
                 <!-- 子音 -->
@@ -98,27 +106,32 @@
                         android:id="@+id/btn_k"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
-                        android:text="k" />
+                        android:text="k"
+                        android:textAllCaps="false"/>
                     <Button
                         android:id="@+id/btn_l"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
-                        android:text="l" />
+                        android:text="l"
+                        android:textAllCaps="false"/>
                     <Button
                         android:id="@+id/btn_m"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
-                        android:text="m" />
+                        android:text="m"
+                        android:textAllCaps="false"/>
                     <Button
                         android:id="@+id/btn_t"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
-                        android:text="t" />
+                        android:text="t"
+                        android:textAllCaps="false"/>
                     <Button
                         android:id="@+id/btn_j"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
-                        android:text="j" />
+                        android:text="j"
+                        android:textAllCaps="false"/>
 
                     <FrameLayout
                         android:id="@+id/space_35"
@@ -128,7 +141,8 @@
                         android:id="@+id/btn_up"
                         android:layout_width="40dp"
                         android:layout_height="match_parent"
-                        android:text="↑" />
+                        android:text="↑"
+                        android:textAllCaps="false"/>
                 </GridLayout>
 
                 <GridLayout
@@ -145,22 +159,26 @@
                         android:id="@+id/btn_p"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
-                        android:text="p" />
+                        android:text="p"
+                        android:textAllCaps="false"/>
                     <Button
                         android:id="@+id/btn_n"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
-                        android:text="n" />
+                        android:text="n"
+                        android:textAllCaps="false"/>
                     <Button
                         android:id="@+id/btn_s"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
-                        android:text="s" />
+                        android:text="s"
+                        android:textAllCaps="false"/>
                     <Button
                         android:id="@+id/btn_w"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
-                        android:text="w" />
+                        android:text="w"
+                        android:textAllCaps="false"/>
 
                     <FrameLayout
                         android:id="@+id/space_20_2"
@@ -170,12 +188,14 @@
                         android:id="@+id/btn_back_space"
                         android:layout_width="65dp"
                         android:layout_height="match_parent"
-                        android:text="weka" />
+                        android:text="weka"
+                        android:textAllCaps="false"/>
                     <Button
                         android:id="@+id/btn_enter"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
-                        android:text="↩" />
+                        android:text="↩"
+                        android:textAllCaps="false"/>
                 </GridLayout>
 
                 <!-- その他 -->
@@ -188,32 +208,38 @@
                         android:id="@+id/btn_comma"
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
-                        android:text="," />
+                        android:text=","
+                        android:textAllCaps="false"/>
                     <Button
                         android:id="@+id/btn_space"
                         android:layout_width="140dp"
                         android:layout_height="match_parent"
-                        android:text="kon" />
+                        android:text="kon"
+                        android:textAllCaps="false"/>
                     <Button
                         android:id="@+id/btn_period"
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
-                        android:text="." />
+                        android:text="."
+                        android:textAllCaps="false"/>
                     <Button
                         android:id="@+id/btn_coron"
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
-                        android:text=":" />
+                        android:text=":"
+                        android:textAllCaps="false"/>
                     <Button
                         android:id="@+id/btn_exclamation"
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
-                        android:text="!" />
+                        android:text="!"
+                        android:textAllCaps="false"/>
                     <Button
                         android:id="@+id/btn_question"
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
-                        android:text="\?" />
+                        android:text="\?"
+                        android:textAllCaps="false"/>
                 </GridLayout>
             </FrameLayout>
         </TableRow>
