@@ -227,13 +227,8 @@ public class TokiPonaIME extends InputMethodService {
 
                             // スペースがなかったらスペースを入れる
                             if ((ic.getTextAfterCursor(0xfffff, 0).length() == 0 || ic.getTextAfterCursor(0xfffff, 0).charAt(0) != ' ')) {
-                                // SPACE キーの KeyEvent を作成
-                                KeyEvent eventDown = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SPACE);
-                                KeyEvent eventUp = new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_SPACE);
-
-                                // KeyEvent を送信
-                                ic.sendKeyEvent(eventDown);
-                                ic.sendKeyEvent(eventUp);
+                                // スペースを挿入
+                                ic.commitText(" ", 1);
                             } else {
                                 // スペースの後にカーソル移動
                                 cursorPosition = (ic.getTextBeforeCursor(0xfffff, 0).length());
